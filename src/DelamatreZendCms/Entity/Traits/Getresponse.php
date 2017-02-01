@@ -2,7 +2,7 @@
 
 namespace DelamatreZendCms\Entity\Traits;
 
-trait Salesforce{
+trait Getresponse{
 
     /**
      * @ORM\Column(type="string",nullable=true)
