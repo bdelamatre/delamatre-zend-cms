@@ -101,6 +101,7 @@ class Module
             __DIR__ . '/config/module.config.php',
             __DIR__ . '/config/lead.global.php',
             __DIR__ . '/config/user.global.php',
+            __DIR__ . '/config/doctrine.global.php',
         );
 
         // Merge all module config options
