@@ -1,0 +1,21 @@
+<?php if($this->isXmlHttpRequest==true): ?>
+
+    <div class="modal-header bg-emphasis">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2>Thank You!</h2>
+    </div>
+    <div class="modal-body">
+        <?=$this->cmsContent($this->content,$this)?>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+
+<?php else: ?>
+
+    <?=$this->partial('layout/components/banner.phtml',array('text'=>'Contact','src'=>'whoweare.jpg'))?>
+    <div class="container" id="who">
+        <?=$this->cmsContent($this->content,$this)?>
+    </div>
+
+<?php endif; ?>

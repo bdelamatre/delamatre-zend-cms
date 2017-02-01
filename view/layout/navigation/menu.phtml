@@ -1,0 +1,131 @@
+<!-- Static navbar -->
+<nav id="menu" class="navbar yamm">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-full">
+                <i class="fa fa-angle-double-down fa-lg"></i>
+            </button>
+            <a href="/"><img class="header-logo" src="/branding/vulcan/logos/vulcan260x94.png" alt="Vulcan Systems Logo" title="Vulcan Systems"/></a>
+        </div>
+        <div id="menu-full" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+
+                <?php $count = 0 ?>
+                <?php foreach ($this->container as $page): ?>
+                    <?php /* @var $page Zend\Navigation\Page\Mvc */ ?>
+                    <?php // when using partials we need to manually check for ACL conditions ?>
+                    <?php if( ! $page->isVisible() || !$this->navigation()->accept($page)) continue; ?>
+                    <?php $hasChildren = $page->hasPages() ?>
+                    <?php if( ! $hasChildren): ?>
+                        <li <?php if($page->isActive()) echo 'class="active"'?>>
+                                <?php if(strstr($page->getLabel(),'Free Quote')): ?>
+                                    <a class="btn btn-emphasis" href="<?php echo $page->getHref() ?>">
+                                        <?php echo $this->translate($page->getLabel()); ?>
+                                    </a>
+                                <?php else: ?>
+                                    <a class="nav-header" href="<?php echo $page->getHref() ?>">
+                                            <?php echo $this->translate($page->getLabel()) ?>
+                                    </a>
+                                <?php endif; ?>
+                        </li>
+                    <?php else: ?>
+                        <li class="dropdown yamm-fw <?php if($page->isActive()) echo 'active'?>">
+
+                            <a href="<?=$page->getHref()?>" class="dropdown-toggle">
+                                <?php echo $page->getLabel() ?>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li class="yamm-content">
+
+                                    <div class="container">
+
+                                    <div class="row yamm-row">
+                                        <?php foreach($page->getPages() as $child): ?>
+
+                                            <?php $hasMoreChildren = $child->hasPages() ?>
+                                            <?php if( ! $hasMoreChildren): ?>
+
+                                                <?php // when using partials we need to manually check for ACL conditions ?>
+                                                <?php if( ! $child->isVisible() || !$this->navigation()->accept($child)) continue; ?>
+                                                <div class="col-sm-<?=$page->col?> yamm-col" style="margin-bottom: 20px;">
+
+                                                        <?php if($child->result['imageMenu']): ?>
+                                                            <div class="col-sm-4 yamm-col-header">
+                                                                <a href="<?php echo $child->getHref() ?>">
+                                                                    <div class="img-rounded <?=$child->result['imageMenu']?>"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-sm-8 yamm-col-label">
+                                                                <a href="<?php echo $child->getHref() ?>">
+                                                                    <?php echo $child->getLabel() ?><br/>
+                                                                </a>
+                                                                <p><?=$child->result['descriptionMenu']?></p>
+                                                            </div>
+                                                        <?php else: ?>
+                                                            <a href="<?php echo $child->getHref() ?>">
+                                                                <?php echo $child->getLabel() ?>
+                                                            </a>
+                                                            <p><?=$child->result['descriptionMenu']?></p>
+                                                        <?php endif; ?>
+                                                </div>
+
+                                            <?php else: ?>
+
+                                                <div class="col-md-12">
+
+                                                    <a>
+                                                        <h2><?php echo $child->getLabel() ?></h2>
+                                                    </a>
+
+                                                    <div class="row yamm-row">
+                                                        <?php foreach($child->getPages() as $anotherChild): ?>
+
+                                                            <?php // when using partials we need to manually check for ACL conditions ?>
+                                                            <?php if( ! $anotherChild->isVisible() || !$this->navigation()->accept($anotherChild)) continue; ?>
+                                                            <div class="col-sm-<?=$page->col?> yamm-col" style="margin-bottom: 20px;">
+                                                                    <?php if($anotherChild->result['imageMenu']): ?>
+                                                                        <div class="col-sm-4 yamm-col-header">
+                                                                            <a href="<?php echo $anotherChild->getHref() ?>">
+                                                                                <div class="img-rounded <?=$anotherChild->result['imageMenu']?>" ></div>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="col-sm-8 yamm-col-label">
+                                                                            <a href="<?php echo $anotherChild->getHref() ?>">
+                                                                                <?php echo $anotherChild->getLabel() ?>
+                                                                            </a>
+                                                                            <p><?=$anotherChild->result['descriptionMenu']?></p>
+                                                                        </div>
+                                                                    <?php else: ?>
+                                                                        <a href="<?php echo $anotherChild->getHref() ?>">
+                                                                            <?php echo $anotherChild->getLabel() ?>
+                                                                        </a>
+                                                                        <p><?=$anotherChild->result['descriptionMenu']?></p>
+                                                                    <?php endif; ?>
+                                                            </div>
+
+                                                        <?php endforeach ?>
+
+                                                    </div>
+
+                                                </div>
+
+                                            <?php endif; ?>
+
+                                        <?php endforeach ?>
+
+                                    </div>
+                                    </div>
+
+                                </li>
+                            </ul>
+
+                        </li>
+                    <?php endif ?>
+                    <?php $count++ ?>
+                <?php endforeach ?>
+            </ul>
+
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>

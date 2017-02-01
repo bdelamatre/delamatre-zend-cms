@@ -1,0 +1,4 @@
+<?=$this->partial('layout/components/banner.phtml',array('text'=>'Site Map','src'=>'whoweare.jpg'))?>
+<div class="container" id="sitemap">
+    <?php echo $this->navigation('default')->menu()->setPartial(array('layout/navigation/sitemap.phtml','default'))->render(); ?>
+</div>

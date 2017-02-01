@@ -1,0 +1,8 @@
+<?=$this->partial('layout/components/banner.phtml',array('text'=>$this->content->title,'src'=>'whoweare.jpg'))?>
+<div class="container post">
+    <a href="<?=$this->url('blog',array('category'=>$this->category))?>"><i class="fa fa-chevron-left fa-lg"></i> <?=ucwords($this->category)?> Articles</a>
+    <h2><?=$this->post->title?></h2>
+    <div class="text-muted"><?=$this->post->posted_timestamp->format('M j Y')?> by Vulcan<sup>&reg;</sup> Systems</div>
+    <hr/>
+    <?=$this->CmsContent($this->post->content,$this)?>
+</div>

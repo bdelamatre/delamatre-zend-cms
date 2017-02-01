@@ -1,0 +1,31 @@
+{
+    "name": "bdelamatre/delamatre-zend-cms",
+    "description": "Lightweight CMS built on ZF2",
+    "keywords": [
+        "bdelamatre",
+        "delamatre",
+        "byron",
+        "zend framework",
+        "ZF2",
+        "CMS",
+        "content management systems"
+    ],
+    "authors": [
+        {
+            "name": "Byron DeLaMatre",
+            "email": "byron@delamatre.com",
+            "homepage": "http://delamatre.com"
+        }
+    ],
+    "require": {
+        "bdelamatre/delamatre-zend": "dev-master"
+    },
+    "autoload":{
+        "psr-0":{
+            "DelamatreZendCms" : "src/"
+        },
+        "classmap": [
+            "Module.php"
+        ]
+    }
+}

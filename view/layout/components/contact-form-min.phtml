@@ -1,0 +1,166 @@
+<?php
+
+if(!isset($this->id)){
+    $this->id = 'contact-form-min';
+}
+
+if(!isset($this->col)){
+    $this->col = 2;
+}
+
+$colMd = 12 / $this->col;
+
+$industries = array(
+    'Chemicals' => 'Chemicals',
+    'Construction' => 'Construction',
+    'Engineering' => 'Engineering',
+    'Environmental' => 'Environmental',
+    'Finance' => 'Finance',
+    'Food Processing' => 'Food Processing',
+    'Machinery' => 'Machinery',
+    'Manufacturing' => 'Manufacturing',
+    'Mining &amp; Minerals' => 'Mining &amp; Minerals',
+    'Municipal Utilities' => 'Municipal Utilities',
+    'Other' => 'Other',
+    'Paper &amp; Pulp' => 'Paper &amp; Pulp',
+    'Petrochemical' => 'Petrochemical',
+    'Power Generation' => 'Power Generation',
+    'Recycling' => 'Recycling',
+    'Sludge &amp; Wastewater' => 'Sludge &amp; Wastewater',
+    'Waste Management' => 'Waste Management',
+);
+
+$applications = array(
+    'Animal Feed Drying' => 'Animal Feed Drying',
+    'Ash Fines Dryer' => 'Ash Fines Dryer',
+    'Asphalt - Hot Mix Plant' => 'Asphalt - Hot Mix Plant',
+    'ASR Processing' => 'ASR Processing',
+    'Biomass Drying / Torrefaction' => 'Biomass Drying / Torrefaction',
+    'Biosolids - Agriculture' => 'Biosolids - Agriculture',
+    'Biosolids - Municipal' => 'Biosolids - Municipal',
+    'Coal Drying' => 'Coal Drying',
+    'Coal Upgrading' => 'Coal Upgrading',
+    'Construction Waste' => 'Construction Waste',
+    'Drill Cuttings' => 'Drill Cuttings',
+    'E-Waste' => 'E-Waste',
+    'Landscaping' => 'Landscaping',
+    'Mercury Removal' => 'Mercury Removal',
+    'Metal Recovery/Removal' => 'Metal Recovery/Removal',
+    'Minerals Calcining' => 'Minerals Calcining',
+    'Minerals Drying' => 'Minerals Drying',
+    'MSW Recycling' => 'MSW Recycling',
+    'Other Application' => 'Other Application',
+    'Other - Used Equipment' => 'Other - Used Equipment',
+    'RCRA Waste' => 'RCRA Waste',
+    'Rendering' => 'Rendering',
+    'Sand Dryer' => 'Sand Dryer',
+    'Soil Remediation' => 'Soil Remediation',
+    'Spent Catalyst' => 'Spent Catalyst',
+    'Tank Bottoms' => 'Tank Bottoms',
+);
+
+if(!isset($this->showIndustry)){
+    $this->showIndustry = true;
+}
+
+if(!isset($this->showApplication)){
+    $this->showApplication = true;
+}
+
+?>
+
+<form action="/submit-lead" method="POST" id="<?=$this->id?>">
+
+    <div class="row">
+
+        <div class="col-md-<?=$colMd?>">
+
+            <div class="form-group">
+                <label for="description">How can we help you?</label>
+                <textarea class="form-control" id="description" name="description" rows="5" wrap="soft" placeholder="I am in need of a quote for a thermal desorption unit for my project..." required></textarea>
+            </div>
+
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" id="email" name="email" type="email" placeholder="your@email.com" required />
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input class="form-control" id="first_name" name="first_name" type="text" required />
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input class="form-control" id="last_name" name="last_name" type="text" required />
+            </div>
+
+        </div>
+        <div class="col-md-<?=$colMd?>">
+
+            <?php if($this->showIndustry==false): ?>
+                <input type="hidden" id="industry_element" name="industry" value="<?=$this->industry?>" />
+            <?php else: ?>
+                <div class="form-group">
+                    <label for="industry_element">Industry</label>
+                    <select class="form-control" id="industry_element" name="industry" required>
+                        <option value="">--None--</option>
+                        <?php foreach($industries as $value=>$name): ?>
+                            <option value="<?=$value?>" <?php if($value==$this->industry){echo'selected="selected"';} ?>><?=$name?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php endif; ?>
+
+            <?php if($this->showApplication==false): ?>
+                <input type="hidden" id="application_element" name="application" value="<?=$this->application?>" />
+            <?php else: ?>
+                <div class="form-group">
+                    <label for="application_element">Application</label>
+                    <select  class="form-control" id="application_element" name="application" title="Application" required>
+                        <option value="">--None--</option>
+                        <?php foreach($applications as $value=>$name): ?>
+                            <option value="<?=$value?>" <?php if($value==$this->application){echo'selected="selected"';} ?>><?=$name?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php endif; ?>
+
+            <div class="form-group">
+                <label for="company">Company</label>
+                <input class="form-control" id="company" name="company" type="text" required />
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input class="form-control" id="phone" name="phone" type="tel" required />
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- url -->
+    <div class="form-group hp">
+        <label for="url">URL (do not use)</label>
+        <input class="form-control" id="url" name="url" type="text" />
+    </div>
+
+    <!-- visited url -->
+    <input  id="tracking_visited_url" name="tracking_visited_url" type="hidden" value="<?=$_SERVER['REQUEST_URI']?>" />
+
+    <!-- referring url -->
+    <input  id="tracking_referral_url" name="tracking_referral_url" type="hidden" value="<?=$_SERVER['HTTP_REFERER']?>" />
+
+    <?php if(!isset($this->noSubmit) || $this->noSubmit==false): ?>
+    <!-- submit button -->
+    <input class="btn btn-emphasis" type="submit" name="submit">
+    <?php endif; ?>
+
+</form>
+
+<!-- jQuery validate plugin -->
+<script type="text/javascript">
+$('#<?=$this->id?>').validate();
+</script>

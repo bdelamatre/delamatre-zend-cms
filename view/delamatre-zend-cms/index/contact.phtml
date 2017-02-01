@@ -1,0 +1,60 @@
+<?php if($this->isXmlHttpRequest==true): ?>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <img src="/branding/vulcan/logos/vulcanHead130x130.png" style="width:80px;" class="pull-left" />
+        &nbsp;&nbsp;
+        <h2><?=$this->content->title?></h2>
+    </div>
+    <div class="modal-body">
+        <?=$this->partial('layout/components/contact-form-min.phtml',array('noSubmit'=>true,'id'=>'contact-popup-form'))?>
+    </div>
+    <div class="modal-footer">
+
+        <div class="pull-left">
+            <h2><a class="emphasis" href="tel:<?=$this->config()['myapp']['contact']['phone_link']?>"><i class="fa fa-phone fa-1x" aria-hidden="true"></i> &nbsp; <?=$this->config()['myapp']['contact']['phone_formatted']?></a></h2>
+        </div>
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-emphasis" onclick="submitContactPopup('#contact-popup-form');">Submit</button>
+    </div>
+
+<?php else: ?>
+
+    <?=$this->partial('layout/components/banner.phtml',array('text'=>$this->content->title,'src'=>'whoweare.jpg'))?>
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="jumbotron">
+                    <h2><a class="emphasis" href="tel:<?=$this->config()['myapp']['contact']['phone_link']?>"><i class="fa fa-phone fa-1x" aria-hidden="true"></i> &nbsp; <?=$this->config()['myapp']['contact']['phone_formatted']?></a></h2>
+                    <h2><a class="emphasis" href="mailto:<?=$this->config()['myapp']['contact']['email']?>"><i class="fa fa-envelope fa-1x" aria-hidden="true"></i> &nbsp; <?=$this->config()['myapp']['contact']['email']?></a></h2>
+                    <br/><br/>
+                    <h3>
+                        <?=$this->config()['myapp']['contact']['company_name']?><br/>
+                        <?=$this->config()['myapp']['contact']['street']?><br/>
+                        <?=$this->config()['myapp']['contact']['city']?>, <?=$this->config()['myapp']['contact']['state']?> <?=$this->config()['myapp']['contact']['zip']?>
+                    </h3>
+                    <br/>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3081.40740074462!2d-92.45576904842791!3d39.4375229793903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87dd2d36579d5745%3A0xc00406fca2d009c!2sVulcan%C2%AE+Systems!5e0!3m2!1sen!2sus!4v1461622124734" width="80%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <?=$this->content?>
+                <hr/>
+                <?=$this->partial('layout/components/contact-form-min.phtml',array('col'=>1))?>
+            </div>
+
+        </div>
+
+        <hr/>
+
+        <img src="/img/vulcan-systems-facility.jpg" class="img-rounded" />
+
+    </div>
+
+<?php endif; ?>

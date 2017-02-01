@@ -1,0 +1,45 @@
+<?php
+
+$rootFolder = '/img/gallery/';
+$gallery = $this->gallery;
+
+?>
+<div id="carousel-db" class="carousel slide" data-ride="carousel" data-interval="5000">
+
+    <ol class="carousel-indicators">
+        <?php foreach($gallery as $key=>$image): ?>
+            <li data-target="#carousel-db" data-slide-to="<?=$key?>"></li>
+        <?php endforeach; ?>
+    </ol>
+
+    <!-- slides Container -->
+    <div class="carousel-inner" role="listbox">
+
+        <!-- slides -->
+        <?php foreach($gallery as $key=>$image): ?>
+            <div class="item <?php if($key==0){echo 'active';}?>">
+                <a href="<?=$image->link?>">
+                    <img src="<?=$image->getImage()?>" class="img-responsive " alt="<?=$image->description?>" title="<?=$image->title?>" />
+                </a>
+                <div class="carousel-caption">
+                    <h1><a href="<?=$image->link?>"><?=$image->title?></a></h1>
+                    <p><?=$image->description?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-db" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+
+    <a class="right carousel-control" href="#carousel-db" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+
+
+</div>
