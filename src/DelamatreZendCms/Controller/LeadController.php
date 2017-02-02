@@ -68,7 +68,7 @@ class LeadController extends AbstractActionController
             $message = $this->createMail();
             $message->setTo($this->getConfig()['lead']['send_to_email']);
 
-            $lead->sendToEmail($this->createMail(),$this->getSmtp());
+            $lead->sendToEmail($message,$this->getSmtp());
 
         }
 
