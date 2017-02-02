@@ -296,23 +296,24 @@ class Lead extends AbstractEntity{
 
     public function sendToEmail(\Zend\Mail\Message $message,Smtp $smtp){
 
+        $message->setSubject("New lead for {$this->first_name} {$this->last_name} from {$this->company}");
+
         $body = <<<EOT
 A new lead has been submited on {$this->created_timestamp->format('m/d/y')}.<br/>
 <br/>
-Source: {$this->tracking_utm_source}<br/>
-Division: {$this->tracking_division}<br/>
-Description:<br/>
-<p>{$this->description}</p>
+Source: <b>{$this->tracking_utm_source}</b><br/>
+Division: <b>{$this->tracking_division}</b><br/>
+Description:<p><b>{$this->description}</b></p>
 <br/>
 The following contact information was collected:<br/>
-First Name: {$this->first_name}<br/>
-Last Name: {$this->last_name}<br/>
-Company: {$this->company}<br/>
-E-Mail: {$this->email}<br/>
-Phone: {$this->phone}<br/>
+First Name: <b>{$this->first_name}</b><br/>
+Last Name: <b>{$this->last_name}</b><br/>
+Company: <b>{$this->company}</b><br/>
+E-Mail: <b>{$this->email}</b><br/>
+Phone: <b>{$this->phone}</b><br/>
 <br/>
 The following tracking information was collected:<br/>
-IP Address: {$this->tracking_ip_address}<br/>
+IP Address: <b>{$this->tracking_ip_address}</b><br/>
 EOT;
 
         // first create the parts
@@ -324,7 +325,7 @@ EOT;
         $mimeMessage = new \Zend\Mime\Message();
         $mimeMessage->setParts(array($text));
 
-        $message->setBody($body);
+        $message->setBody($mimeMessage);
 
         $smtp->send($message);
     }

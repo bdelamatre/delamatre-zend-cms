@@ -32,8 +32,8 @@ class LeadController extends AbstractActionController
         //set the lead division
         //fix-me: create function
         //$lead->setTrackingDivision($post['division'],$this->getConfig()['lead']['default_division']);
-        if(empty($post['division'])){
-            $post['divison'] = $this->getConfig()['lead']['default_division'];
+        if(empty($post['tracking_division'])){
+            $post['tracking_division'] = $this->getConfig()['lead']['default_division'];
         }
 
         //set the tracking information
