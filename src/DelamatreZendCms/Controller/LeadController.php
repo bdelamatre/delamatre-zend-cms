@@ -31,14 +31,10 @@ class LeadController extends AbstractActionController
 
         //set the lead division
         //fix-me: create function
-
-       // $lead->setTrackingDivision($post['division'],$this->getConfig()['lead']['default_division']);
-
         //$lead->setTrackingDivision($post['division'],$this->getConfig()['lead']['default_division']);
         if(empty($post['division'])){
             $post['divison'] = $this->getConfig()['lead']['default_division'];
         }
-
 
         //set the tracking information
         $lead->setTrackingInformation($this->getGeoIP2Client());
@@ -56,12 +52,24 @@ class LeadController extends AbstractActionController
         $this->getEntityManager()->flush();
 
         //send the lead to salesforce if not spam
-        if($lead->tracking_spam==false && $this->getConfig()['salesforce']['send_leads_to_salesforce']==true){
+        if($lead->tracking_spam==false
+            && $this->getConfig()['salesforce']['send_leads_to_salesforce']==true){
 
             //$lead->sendToSalesForce($this->getConfig()['myapp']['salesforce']['web_to_lead_form']['oid']);
-            $lead->sendToSalesForceApi($this->getSalesForceEnterpriseClient(),$this->getConfig()['myapp']['baseurl'],$this->getEntityManager(),$this->getGetresponseClients());
+            $lead->sendToSalesForceApi($this->getSalesForceEnterpriseClient(),$this->getConfig()['myapp']['baseurl'],
+                                        $this->getEntityManager(),$this->getGetresponseClients());
 
             $this->getEntityManager()->flush();
+        }
+
+        if($lead->tracking_spam==false
+            && $this->getConfig()['lead']['send_to_email']){
+
+            $message = $this->createMail();
+            $message->setTo($this->getConfig()['lead']['send_to_email']);
+
+            $lead->sendToEmail($this->createMail(),$this->getSmtp());
+
         }
 
         //user has contacted us so stop bugging them with popups

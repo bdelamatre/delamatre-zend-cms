@@ -10,9 +10,14 @@ use DelamatreZendCms\Form\LeadForm;
 use DelamatreZendCmsAdmin\Form\Getresponse;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Mail\Message;
+use Zend\Mail\Transport\Smtp;
+use Zend\Mime\Mime;
+use Zend\Mime\Part;
 use Zend\Validator\Timezone;
 
 /**
+ * @ORM\Entity
  * @ORM\Table(name="lead")
  */
 class Lead extends AbstractEntity{
@@ -127,7 +132,6 @@ class Lead extends AbstractEntity{
      * @ORM\Column(type="float",nullable=true)
      */
     public $longitude = 0.0;
-
 
     /**
      * Suggestions of available UTM Source values for tracking the lead (when manually entering)
@@ -290,6 +294,41 @@ class Lead extends AbstractEntity{
         }
     }
 
+    public function sendToEmail(Message $message,Smtp $smtp){
+
+        $body = <<<EOT
+A new lead has been submited on {$this->created_timestamp->format('m/d/y')}.<br/>
+<br/>
+Source: {$this->tracking_utm_source}<br/>
+Division: {$this->tracking_division}<br/>
+Description:<br/>
+<p>{$this->description}</p>
+<br/>
+The following contact information was collected:<br/>
+First Name: {$this->first_name}<br/>
+Last Name: {$this->last_name}<br/>
+Company: {$this->company}<br/>
+E-Mail: {$this->email}<br/>
+Phone: {$this->phone}<br/>
+<br/>
+The following tracking information was collected:<br/>
+IP Address: {$this->tracking_ip_address}<br/>
+EOT;
+
+        // first create the parts
+        $text = new Part($body);
+        $text->type = Mime::TYPE_HTML;
+        $text->charset = 'utf-8';
+
+        // then add them to a MIME message
+        $mimeMessage = new \Zend\Mime\Message();
+        $mimeMessage->setParts(array($text));
+
+        $message->setBody($body);
+
+        $smtp->send($message);
+    }
+
     public function sendToSalesForceApi(\SforceEnterpriseClient $client,$baseUrl='https://www.vulcansystems.com',EntityManager $entityManager = null, array $getresponseClients = array()){
 
         //build salesforce object
@@ -309,7 +348,7 @@ class Lead extends AbstractEntity{
         }
         $sObject->Has_GeoIP__c = $this->hasGeoIp();
 
-
+        //fix-me: need a better way to handle this
         if(!empty($getresponseClients)){
 
             $inGetresponse = false;
@@ -395,26 +434,6 @@ class Lead extends AbstractEntity{
         $form = new LeadForm();
 
         return $form;
-    }
-
-    public function getInputFilter()
-    {
-        if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
-
-            $inputFilter->add(array(
-                'name'     => 'id',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
-
-            $this->inputFilter = $inputFilter;
-        }
-
-
-        return $this->inputFilter;
     }
 
 }
