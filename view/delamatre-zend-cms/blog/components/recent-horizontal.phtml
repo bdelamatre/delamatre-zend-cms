@@ -1,0 +1,14 @@
+<h1>News For Now <a class="fa fa-angle-double-right" href="/blog"></a></h1>
+<p>What is happening now at <?=$this->config()['myapp']['contact']['company_name']?>.</p>
+<!-- Example row of columns -->
+<div class="row">
+    <div class="col-lg-4">
+        <?=$this->partial('delamatre-zend-cms/blog/components/post-horizontal.phtml',array('post'=>$this->blog[0]))?>
+    </div>
+    <div class="col-lg-4">
+        <?=$this->partial('delamatre-zend-cms/blog/components/post-horizontal.phtml',array('post'=>$this->blog[1]))?>
+    </div>
+    <div class="col-lg-4">
+        <?=$this->partial('delamatre-zend-cms/blog/components/post-horizontal.phtml',array('post'=>$this->blog[2]))?>
+    </div>
+</div>
