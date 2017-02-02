@@ -294,7 +294,7 @@ class Lead extends AbstractEntity{
         }
     }
 
-    public function sendToEmail(Message $message,Smtp $smtp){
+    public function sendToEmail(\Zend\Mail\Message $message,Smtp $smtp){
 
         $body = <<<EOT
 A new lead has been submited on {$this->created_timestamp->format('m/d/y')}.<br/>
@@ -316,8 +316,8 @@ IP Address: {$this->tracking_ip_address}<br/>
 EOT;
 
         // first create the parts
-        $text = new Part($body);
-        $text->type = Mime::TYPE_HTML;
+        $text = new \Zend\Mime\Part($body);
+        $text->type = \Zend\Mime\Mime::TYPE_HTML;
         $text->charset = 'utf-8';
 
         // then add them to a MIME message
