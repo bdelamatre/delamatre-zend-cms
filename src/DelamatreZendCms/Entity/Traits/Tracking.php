@@ -142,11 +142,13 @@ trait Tracking{
     public $tracking_timezone;
 
 
-    public function setTrackingInformation(Client $client){
+    public function setTrackingInformation(Client $client=null){
         $this->setTrackingSessionIdFromSession();
         $this->setTrackingUtmFromSession();
         $this->setTrackingIpAddress();
-        $this->setTrackingGeoIpInfoFromClient($client);
+        if($client){
+            $this->setTrackingGeoIpInfoFromClient($client);
+        }
         $this->setTrackingHostName();
     }
 
