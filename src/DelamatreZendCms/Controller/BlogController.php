@@ -64,7 +64,7 @@ class BlogController extends AbstractActionController
 
         //prepare view
         $view = new ViewModel();
-        $view->content = $this->getContent('blog');
+        $view->content = $this->getContent('post');
         $view->post = $post;
         $view->category = $category;
 
