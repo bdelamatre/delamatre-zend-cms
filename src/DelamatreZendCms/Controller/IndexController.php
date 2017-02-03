@@ -42,7 +42,9 @@ class IndexController extends AbstractActionController
 
     //default sitemap
     public function sitemapAction(){
-
+        $view = new ViewModel();
+        $view->content = $this->getContent('sitemap');
+        return $view;
     }
 
     //default sitemap xml
@@ -50,7 +52,7 @@ class IndexController extends AbstractActionController
 
         //create view
         $view = new ViewModel();
-        $view->setTemplate('delamatre-zend/index/sitemap-xml.phtml');
+        $view->setTemplate('delamatre-zend-cms/index/sitemap-xml.phtml');
         $view->setTerminal(true);
 
         //create response

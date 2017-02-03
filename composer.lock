@@ -7017,16 +7017,16 @@
         },
         {
             "name": "zf-commons/zfc-user",
-            "version": "1.4.3",
+            "version": "1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "647e2fcd1f02eb6633b8eef903670583b7637cdd"
+                "reference": "f3d5fababf2d59f840527e62c4756fa81e346651"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/647e2fcd1f02eb6633b8eef903670583b7637cdd",
-                "reference": "647e2fcd1f02eb6633b8eef903670583b7637cdd",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/f3d5fababf2d59f840527e62c4756fa81e346651",
+                "reference": "f3d5fababf2d59f840527e62c4756fa81e346651",
                 "shasum": ""
             },
             "require": {
@@ -7090,7 +7090,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2016-05-05 19:22:12"
+            "time": "2016-05-07 11:21:34"
         },
         {
             "name": "zf-commons/zfc-user-doctrine-orm",
