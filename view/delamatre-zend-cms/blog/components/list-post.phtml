@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-md-9">
+        <h2><?=$this->post->title?></h2>
+        <div class="text-muted"><?=$this->post->posted_timestamp->format('M j Y')?> by Vulcan<sup>&reg;</sup> Systems</div>
+        <br/>
+        <?=$this->post->contentShort?>
+        <?php if($this->category!=='all'): ?>
+            <a class="btn btn-emphasis" href="<?=$this->url('blog-post',array('key'=>$this->post->key,'category'=>$this->category))?>">Read More</a>
+        <?php else: ?>
+            <a class="btn btn-emphasis" href="<?=$this->url('blog-post',array('key'=>$this->post->key))?>">Read More</a>
+        <?php endif; ?>
+    </div>
+    <div class="col-md-3">
+        <img src="<?=$this->post->getImageThumb()?>" alt="<?=$this->post->title?>" class="image-responsive" style="width:100%;" />
+    </div>
+</div>

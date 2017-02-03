@@ -3,6 +3,6 @@
 <?php endif; ?>
 
 <?php foreach($this->blog as $post): ?>
-    <?=$this->partial('delamatre-zend-cms/blog/components/post.phtml',array('category'=>$this->category,'blog'=>$this->blog));?>
+    <?=$this->partial('delamatre-zend-cms/blog/components/list-post.phtml',array('category'=>$this->category,'post'=>$post));?>
     <hr/>
 <?php endforeach; ?>
