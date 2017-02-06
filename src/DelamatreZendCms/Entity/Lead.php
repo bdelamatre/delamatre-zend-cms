@@ -18,7 +18,6 @@ use Zend\Validator\Timezone;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="lead")
  */
 class Lead extends AbstractEntity{
 

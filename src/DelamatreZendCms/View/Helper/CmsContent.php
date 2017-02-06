@@ -19,7 +19,9 @@ class CmsContent extends AbstractHelper
 
     public static function parse($matches,$parameters){
 
-        $string =& trim($matches[1]);
+        $string =& $matches[1];
+
+        $string = trim($string);
 
         //parse variables
         /*$string = preg_replace_callback('|{(.*)}|U', function($variableMatches) use($parameters){ return self::parseVariable($variableMatches,$parameters); }, $string);

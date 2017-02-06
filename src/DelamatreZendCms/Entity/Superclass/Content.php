@@ -24,14 +24,19 @@ class Content extends AbstractEntity{
     public $key;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      */
-    public $keywords;
+    public $title;
 
     /**
      * @ORM\Column(type="text")
      */
     public $description;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    public $keywords;
 
     /**
      * @ORM\Column(type="integer")
@@ -41,7 +46,7 @@ class Content extends AbstractEntity{
     /**
      * @ORM\Column(type="string")
      */
-    public $title;
+    public $image;
 
     /**
      * @ORM\Column(type="string")
@@ -59,11 +64,6 @@ class Content extends AbstractEntity{
     public $descriptionMenu;
 
     /**
-     * @ORM\Column(type="string")
-     */
-    public $image;
-
-    /**
      * @ORM\Column(type="text")
      */
     public $content;
@@ -71,34 +71,19 @@ class Content extends AbstractEntity{
     /**
      * @ORM\Column(type="datetime")
      */
-    public $datetime;
+    public $created_datetime;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    public $updated_datetime;
 
     /**
      * @ORM\Column(type="boolean")
      */
     public $active;
-    
-    /**
-     * Populate from an array.
-     *
-     * @param array $data
-     */
-    /*public function exchangeArray($data = array())
-    {
-        $this->id = $data['id'];
-        $this->key = $data['key'];
-        $this->keywords = $data['keyWords'];
-        $this->description = $data['description'];
-        $this->sortOrder = $data['sortOrder'];
-        $this->title = $data['title'];
-        $this->imageThumb = $data['imageThumb'];
-        $this->image = $data['image'];
-        $this->content = $data['content'];
-        $this->active = $data['active'];
-    }*/
 
-
-    public function getInputFilter()
+    /*public function getInputFilter()
     {
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
@@ -116,7 +101,7 @@ class Content extends AbstractEntity{
 
 
         return $this->inputFilter;
-    }
+    }*/
 
     public function getFolderName(){
         return(strtolower(__CLASS__));

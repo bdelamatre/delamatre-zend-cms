@@ -3,6 +3,7 @@
 namespace DelamatreZendCms\Navigation;
 
 use Doctrine\ORM\EntityManager;
+use Interop\Container\ContainerInterface;
 use Zend\Navigation\Service\DefaultNavigationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -113,26 +114,26 @@ class DynamicNavigation extends DefaultNavigationFactory
      * @param ServiceLocatorInterface $serviceLocator
      * @return array
      */
-    protected function getPages(ServiceLocatorInterface $serviceLocator)
+    protected function getPages(ContainerInterface $container)
     {
 
         //get the top level configuration from the global configuration file
-        $configuration = $serviceLocator->get('config');
+        $configuration = $container->get('config');
 
         //get the entityManager so that we can query records
         /* @var $em \Doctrine\ORM\EntityManager */
-        $em = $serviceLocator->get('doctrine.entitymanager.orm_default');
+        $em = $container->get('doctrine.entitymanager.orm_default');
 
         //search for records and add pages
         $configuration['navigation'][$this->getName()] = static::recursiveSearch($em,$configuration['navigation'][$this->getName()]);
 
         //override the configuration with the new one
-        $serviceLocator->setAllowOverride(true);
-        $serviceLocator->setService('config',$configuration);
-        $serviceLocator->setAllowOverride(false);
+        $container->setAllowOverride(true);
+        $container->setService('config',$configuration);
+        $container->setAllowOverride(false);
 
         //get and return the [ages
-        $this->pages = parent::getPages($serviceLocator);
+        $this->pages = parent::getPages($container);
         return $this->pages;
 
 
