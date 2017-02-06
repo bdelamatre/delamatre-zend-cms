@@ -17,7 +17,6 @@ use Zend\Mime\Part;
 use Zend\Validator\Timezone;
 
 /**
- * @ORM\Entity
  */
 class Lead extends AbstractEntity{
 

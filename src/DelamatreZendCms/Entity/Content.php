@@ -17,7 +17,7 @@ class Content extends Superclass\Content{
     /**
      * @ORM\Column(type="string")
      */
-    protected $contentType = self::CONTENT_TYPE_PAGE;
+    public $contentType = self::CONTENT_TYPE_PAGE;
 
     /**
      * Content types can be used to specify special handling

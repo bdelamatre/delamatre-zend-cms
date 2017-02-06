@@ -15,17 +15,17 @@ class Blog extends Superclass\Content{
     /**
      * @ORM\Column(type="text")
      */
-    protected $category;
+    public $category;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $posted_timestamp;
+    public $posted_timestamp;
 
     /**
      * @ORM\Column(type="text")
      */
-    protected $contentShort;
+    public $contentShort;
 
 
     public function getImageThumb(){
