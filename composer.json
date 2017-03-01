@@ -21,8 +21,8 @@
         "bdelamatre/delamatre-zend": "dev-master"
     },
     "autoload":{
-        "psr-0":{
-            "DelamatreZendCms" : "src/"
+        "psr-4":{
+            "DelamatreZendCms\\" : "src/"
         },
         "classmap": [
             "Module.php"

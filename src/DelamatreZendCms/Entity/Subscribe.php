@@ -11,7 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  * Custom subscribe list
  *
  * @ORM\Entity
- * @ORM\Table(name="subscribe")
+ * @ORM\Table(name="subscribe",indexes={
+ *     @ORM\Index(name="index_email", columns={"email"}),
+ *     @ORM\Index(name="index_created_timestamp", columns={"created_timestamp"}),
+ * })
  */
 class Subscribe extends AbstractEntity{
 

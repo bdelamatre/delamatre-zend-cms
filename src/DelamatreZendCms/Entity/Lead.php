@@ -17,6 +17,13 @@ use Zend\Mime\Part;
 use Zend\Validator\Timezone;
 
 /**
+ * @ORM\Entity
+ * @ORM\Table(name="lead",indexes={
+ *     @ORM\Index(name="index_access_id", columns={"access_id"}),
+ *     @ORM\Index(name="index_created_timestamp", columns={"created_timestamp"}),
+ *     @ORM\Index(name="index_owner", columns={"owner"}),
+ *     @ORM\Index(name="index_email", columns={"email"})
+ * })
  */
 class Lead extends AbstractEntity{
 

@@ -7,7 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  *
  * @ORM\Entity
- * @ORM\Table(name="gallery")
+ * @ORM\Table(name="gallery",indexes={
+ *     @ORM\Index(name="index_key", columns={"key"}),
+ *     @ORM\Index(name="index_title", columns={"title"}),
+ *     @ORM\Index(name="index_created_datetime", columns={"created_datetime"}),
+ *     @ORM\Index(name="index_updated_datetime", columns={"updated_datetime"}),
+ *     @ORM\Index(name="index_active", columns={"active"}),
+ *     @ORM\Index(name="index_find", columns={"key","active"}),
+ *     @ORM\Index(name="index_sort", columns={"title","active"})
+ * })
  */
 class Gallery extends Superclass\Content{
 
