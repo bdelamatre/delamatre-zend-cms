@@ -2,15 +2,13 @@
 
 namespace DelamatreZendCms\Entity;
 
+use DelamatreZendCms\Entity\Superclass\Content as SuperclassContent;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Custom blog
  *
  * @ORM\Entity
- * @ORM\Table(name="blog",indexes={
- *     @ORM\Index(name="index_category", columns={"category"}),
- *     @ORM\Index(name="index_posted_timestamp", columns={"posted_timestamp"}),
+ * @ORM\Table(name="case_study",indexes={
  *     @ORM\Index(name="index_key", columns={"key"}),
  *     @ORM\Index(name="index_title", columns={"title"}),
  *     @ORM\Index(name="index_created_datetime", columns={"created_datetime"}),
@@ -19,31 +17,33 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\Index(name="index_find", columns={"key","active"}),
  *     @ORM\Index(name="index_sort", columns={"title","active"})
  * })
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="record_type", type="string")
+ * @ORM\DiscriminatorMap({"case-study"="CaseStudy","custom-case-study"="Application\Entity\CaseStudy"})
  */
-class Blog extends Superclass\Content{
+class CaseStudy extends SuperclassContent{
 
     /**
      * @ORM\Column(type="string")
      */
-    public $category;
+    public $location;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="float",nullable=true)
      */
-    public $posted_timestamp;
+    public $latitude;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="float",nullable=true)
      */
-    public $contentShort;
-
+    public $longitude;
 
     public function getImageThumb(){
-        return '/img/blog/'.$this->imageThumb;
+        return '/img/case-study/'.$this->imageThumb;
     }
 
     public function getImage(){
-        return '/img/blog/'.$this->image;
+        return '/img/case-study/'.$this->image;
     }
 
 }

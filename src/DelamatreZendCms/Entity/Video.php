@@ -2,15 +2,13 @@
 
 namespace DelamatreZendCms\Entity;
 
+use DelamatreZendCms\Entity\Superclass\Content as SuperclassContent;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Custom blog
  *
  * @ORM\Entity
- * @ORM\Table(name="blog",indexes={
- *     @ORM\Index(name="index_category", columns={"category"}),
- *     @ORM\Index(name="index_posted_timestamp", columns={"posted_timestamp"}),
+ * @ORM\Table(name="video",indexes={
  *     @ORM\Index(name="index_key", columns={"key"}),
  *     @ORM\Index(name="index_title", columns={"title"}),
  *     @ORM\Index(name="index_created_datetime", columns={"created_datetime"}),
@@ -19,31 +17,27 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\Index(name="index_find", columns={"key","active"}),
  *     @ORM\Index(name="index_sort", columns={"title","active"})
  * })
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="record_type", type="string")
+ * @ORM\DiscriminatorMap({"video"="Video","custom-video"="Application\Entity\Video"})
  */
-class Blog extends Superclass\Content{
+class Video extends SuperclassContent{
 
     /**
      * @ORM\Column(type="string")
      */
-    public $category;
+    protected $youtubeUrl;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    public $posted_timestamp;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    public $contentShort;
-
+    public function getUrl(){
+        return $this->youtubeUrl;
+    }
 
     public function getImageThumb(){
-        return '/img/blog/'.$this->imageThumb;
+        return '/img/video/'.$this->imageThumb;
     }
 
     public function getImage(){
-        return '/img/blog/'.$this->image;
+        return '/img/video/'.$this->image;
     }
 
 }

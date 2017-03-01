@@ -2,15 +2,13 @@
 
 namespace DelamatreZendCms\Entity;
 
+use DelamatreZendCms\Entity\Superclass\Content as SuperclassContent;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Custom blog
  *
  * @ORM\Entity
- * @ORM\Table(name="blog",indexes={
- *     @ORM\Index(name="index_category", columns={"category"}),
- *     @ORM\Index(name="index_posted_timestamp", columns={"posted_timestamp"}),
+ * @ORM\Table(name="document",indexes={
  *     @ORM\Index(name="index_key", columns={"key"}),
  *     @ORM\Index(name="index_title", columns={"title"}),
  *     @ORM\Index(name="index_created_datetime", columns={"created_datetime"}),
@@ -19,31 +17,33 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\Index(name="index_find", columns={"key","active"}),
  *     @ORM\Index(name="index_sort", columns={"title","active"})
  * })
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="record_type", type="string")
+ * @ORM\DiscriminatorMap({"docuemnt"="Document","custom-document"="Application\Entity\Document"})
  */
-class Blog extends Superclass\Content{
+class Document extends SuperclassContent{
 
     /**
      * @ORM\Column(type="string")
      */
-    public $category;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    public $posted_timestamp;
+    protected $download;
 
     /**
      * @ORM\Column(type="text")
      */
-    public $contentShort;
+    protected $category;
+    
 
+    public function getDownload(){
+        return '/doc/doc/'.($this->download);
+    }
 
     public function getImageThumb(){
-        return '/img/blog/'.$this->imageThumb;
+        return '/img/doc/'.$this->imageThumb;
     }
 
     public function getImage(){
-        return '/img/blog/'.$this->image;
+        return '/img/doc/'.$this->image;
     }
 
 }
