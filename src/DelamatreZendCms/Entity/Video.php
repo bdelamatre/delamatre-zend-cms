@@ -24,9 +24,23 @@ use Doctrine\ORM\Mapping as ORM;
 class Video extends SuperclassContent{
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    public $display_on_website = 0;
+
+    /**
      * @ORM\Column(type="string")
      */
-    protected $youtubeUrl;
+    public $youtubeUrl;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Email", mappedBy="videos")
+     */
+    public $emails;
+
+    public function __construct() {
+        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getUrl(){
         return $this->youtubeUrl;

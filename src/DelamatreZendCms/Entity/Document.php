@@ -24,15 +24,28 @@ use Doctrine\ORM\Mapping as ORM;
 class Document extends SuperclassContent{
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    public $display_on_website = 0;
+
+    /**
      * @ORM\Column(type="string")
      */
-    protected $download;
+    public $download;
 
     /**
      * @ORM\Column(type="text")
      */
-    protected $category;
-    
+    public $category;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Email", mappedBy="documents")
+     */
+    public $emails;
+
+    public function __construct() {
+        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getDownload(){
         return '/doc/doc/'.($this->download);

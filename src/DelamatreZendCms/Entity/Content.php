@@ -29,6 +29,15 @@ class Content extends Superclass\Content{
     public $contentType = self::CONTENT_TYPE_PAGE;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Email", mappedBy="pages")
+     */
+    public $emails;
+
+    public function __construct() {
+        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Content types can be used to specify special handling
      *
      * @return array

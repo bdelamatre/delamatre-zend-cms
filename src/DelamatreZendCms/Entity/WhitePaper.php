@@ -23,6 +23,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class WhitePaper extends SuperclassContent{
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    public $display_on_website = 0;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Email", mappedBy="whitePapers")
+     */
+    public $emails;
+
+    public function __construct() {
+        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function getDownload(){
         return $this->getImage();
     }

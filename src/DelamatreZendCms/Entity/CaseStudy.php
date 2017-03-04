@@ -24,6 +24,11 @@ use Doctrine\ORM\Mapping as ORM;
 class CaseStudy extends SuperclassContent{
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    public $display_on_website = 0;
+
+    /**
      * @ORM\Column(type="string")
      */
     public $location;
@@ -37,6 +42,15 @@ class CaseStudy extends SuperclassContent{
      * @ORM\Column(type="float",nullable=true)
      */
     public $longitude;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Email", mappedBy="caseStudies")
+     */
+    public $emails;
+
+    public function __construct() {
+        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getImageThumb(){
         return '/img/case-study/'.$this->imageThumb;
