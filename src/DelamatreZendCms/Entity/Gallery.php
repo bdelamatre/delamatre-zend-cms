@@ -31,11 +31,11 @@ class Gallery extends Superclass\Content{
     
 
     public function getImageThumb(){
-        return '/img/gallery/'.$this->category.'/'.$this->imageThumb;
+        return $this->imageThumb;
     }
 
     public function getImage(){
-        return '/img/gallery/'.$this->category.'/'.$this->image;
+        return $this->image;
     }
 
 }

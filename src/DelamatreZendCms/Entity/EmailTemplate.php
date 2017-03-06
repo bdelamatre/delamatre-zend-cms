@@ -25,7 +25,7 @@ class EmailTemplate extends SuperclassContent{
      */
     public $theme_color;
 
-    public function generateHtml(Email $email=null){
+    public function generateHtml(Email $email=null,$baseUrl=null){
 
         //get the template code
         $html = $this->content;
@@ -35,6 +35,7 @@ class EmailTemplate extends SuperclassContent{
         if($email){
 
             //fill in all of the variables
+           /*
             $html = str_replace('[[title]]',$email->title,$html);
             $html = str_replace('[[description]]',$email->description,$html);
             $html = str_replace('[[image]]',$email->image,$html);
@@ -46,9 +47,12 @@ class EmailTemplate extends SuperclassContent{
                 $themeColorChanged = true;
                 $html = str_replace($this->theme_color,$email->theme_color,$html);
             }
-            $html = str_replace('[[related_content]]',$email->generateRelatedContentHtml(),$html);
+            $html = str_replace('[[related_content]]',$email->generateRelatedContentHtml($baseUrl),$html);
 
+            $html = str_replace('[[signature]]',$email->generateSignature(),$html);
+           */
         }
+
 
         //if the theme color wans't overridden, set here.
         /*if($themeColorChanged==false

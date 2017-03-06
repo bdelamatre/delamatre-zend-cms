@@ -47,11 +47,11 @@ class Video extends SuperclassContent{
     }
 
     public function getImageThumb(){
-        return '/img/video/'.$this->imageThumb;
+        return $this->imageThumb;
     }
 
     public function getImage(){
-        return '/img/video/'.$this->image;
+        return $this->image;
     }
 
 }

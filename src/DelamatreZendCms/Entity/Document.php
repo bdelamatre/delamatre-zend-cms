@@ -48,15 +48,19 @@ class Document extends SuperclassContent{
     }
 
     public function getDownload(){
-        return '/doc/doc/'.($this->download);
+        return $this->download;
     }
 
     public function getImageThumb(){
-        return '/img/doc/'.$this->imageThumb;
+        return $this->imageThumb;
     }
 
     public function getImage(){
-        return '/img/doc/'.$this->image;
+        return $this->image;
+    }
+
+    public function getUrl(){
+        $this->getDownload();
     }
 
 }

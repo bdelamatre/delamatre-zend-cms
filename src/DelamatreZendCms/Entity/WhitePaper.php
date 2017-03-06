@@ -42,7 +42,11 @@ class WhitePaper extends SuperclassContent{
     }
 
     public function getImage(){
-        return '/doc/white-paper/'.($this->image);
+        return $this->image;
+    }
+
+    public function getUrl(){
+        return $this->getDownload();
     }
 
 }

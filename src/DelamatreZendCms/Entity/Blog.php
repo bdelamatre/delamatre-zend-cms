@@ -39,11 +39,11 @@ class Blog extends Superclass\Content{
 
 
     public function getImageThumb(){
-        return '/img/blog/'.$this->imageThumb;
+        return $this->imageThumb;
     }
 
     public function getImage(){
-        return '/img/blog/'.$this->image;
+        return $this->image;
     }
 
 }

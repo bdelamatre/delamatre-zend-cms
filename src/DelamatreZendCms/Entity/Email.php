@@ -2,8 +2,14 @@
 
 namespace DelamatreZendCms\Entity;
 
+use Application\Controller\ResourceController;
+use DelamatreZend\Entity\User;
 use DelamatreZendCms\Entity\Superclass\Content as SuperclassContent;
+use DelamatreZendCmsAdmin\Form\Element\GenerateSignature;
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Mime\Message;
+use Zend\Mime\Mime;
+use Zend\Mime\Part;
 
 /**
  *
@@ -19,6 +25,11 @@ use Doctrine\ORM\Mapping as ORM;
  * })
  */
 class Email extends SuperclassContent{
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    public $subject;
 
     /**
      * @ORM\Column(type="integer",nullable=true);
@@ -49,6 +60,37 @@ class Email extends SuperclassContent{
      * @ORM\Column(type="string",nullable=true)
      */
     public $calltoaction_url;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    public $generate_signature = 0;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    public $signature_name;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    public $signature_title;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    public $signature_extension;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    public $signature_mobile;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    public $attach_related_files = 1;
+
 
     /**
      * @ORM\ManyToMany(targetEntity="Video", inversedBy="emails")
@@ -86,16 +128,106 @@ class Email extends SuperclassContent{
      */
     public $emailTemplate;
 
-    public function generateHtml(){
+    public function __construct() {
+        $this->videos               = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documents            = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->caseStudies          = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->whitePapers          = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function generateMessage($baseUrl=null){
+
+
+        $html = $this->generateHtml($baseUrl);
+
+        // first create the parts
+        $body = new Part($html);
+        $body->type = Mime::TYPE_HTML;
+        $body->charset = 'utf-8';
+
+        $attachments = array();
+
+        if($this->attach_related_files==true){
+
+            //documents
+            /** @var Document $document */
+            foreach($this->documents as $document){
+
+                $filename = 'public/'.$document->getDownload();
+
+                $attachment = new Part(file_get_contents($filename));
+                $attachment->type = mime_content_type($filename);
+                $attachment->filename = basename($filename);
+                $attachment->disposition = Mime::DISPOSITION_ATTACHMENT;
+                // Setting the encoding is recommended for binary data
+                $attachment->encoding = Mime::ENCODING_BASE64;
+                $attachments[] = $attachment;
+
+            }
+
+            //whitepapers
+            /** @var WhitePaper $whitePaper */
+            foreach($this->whitePapers as $whitePaper){
+
+                $filename = 'public/'.$whitePaper->getDownload();
+
+                $attachment = new Part(file_get_contents($filename));
+                $attachment->type = mime_content_type($filename);
+                $attachment->filename = basename($filename);
+                $attachment->disposition = Mime::DISPOSITION_ATTACHMENT;
+                // Setting the encoding is recommended for binary data
+                $attachment->encoding = Mime::ENCODING_BASE64;
+                $attachments[] = $attachment;
+
+            }
+
+        }
+
+        // then add them to a MIME message
+        $mimeMessage = new Message();
+        $mimeMessage->setParts(array_merge(array($body),$attachments));
+        return $mimeMessage;
+
+    }
+
+    public function getSubject(){
+        return $this->subject;
+    }
+
+    public function generateHtml($baseUrl=null){
 
         /* @var EmailTemplate $emailTemplate */
         $emailTemplate = $this->emailTemplate;
-        $html = $emailTemplate->generateHtml($this);
+        $html = $emailTemplate->generateHtml($this,$baseUrl);
 
         return $html;
     }
 
-    public function generateRelatedContentHtml($useContentHeader=true,$contentHeaderTag='h6'){
+    public function setUser(User $user){
+        $this->user = $user;
+    }
+
+    public function getUser(){
+        return $this->user;
+    }
+
+    public function generateSignature(){
+
+        if($this->generate_signature===GenerateSignature::YES_STATIC){
+            return ResourceController::generateSignatureHtml($this->signature_name,$this->signature_title,$this->signature_extension,$this->signature_mobile);
+        }elseif($this->generate_signature===GenerateSignature::YES_AUTO){
+            if(isset($this->user) && $this->user instanceof User){
+                return ResourceController::generateSignatureHtml($this->user->displayName,$this->user->title,$this->user->office,$this->user->mobile);
+            }else{
+                return '';
+            }
+        }else{
+            return '';
+        }
+
+    }
+
+    public function generateRelatedContentHtml($baseUrl=null,$useContentHeader=true,$contentHeaderTag='h6'){
 
         $html = '';
         $caseStudies = $this->caseStudies;
@@ -103,39 +235,39 @@ class Email extends SuperclassContent{
         $videos = $this->videos;
         $whitePapers = $this->whitePapers;
 
-        if($caseStudies){
+        if(count($caseStudies)>0){
             if($useContentHeader==true){
                 $html .= "<$contentHeaderTag>Case Studies</$contentHeaderTag>\n";
             }
             foreach($caseStudies as $caseStudy){
-                $html .= "<p><a href=\"#\">{$caseStudy->title} &raquo;</a></p>";
+                $html .= "<p><a href=\"$baseUrl{$caseStudy->getUrl()}\">{$caseStudy->title} &raquo;</a></p>";
             }
         }
 
-        if($documents){
+        if(count($documents)>0){
             if($useContentHeader==true){
                 $html .= "<$contentHeaderTag>Documents</$contentHeaderTag>\n";
             }
             foreach($documents as $document){
-                $html .= "<p><a href=\"#\">{$document->title} &raquo;</a></p>";
+                $html .= "<p><a href=\"$baseUrl{$document->getDownload()}\">{$document->title} &raquo;</a></p>";
             }
         }
 
-        if($videos){
+        if(count($videos)>0){
             if($useContentHeader==true){
                 $html .= "<$contentHeaderTag>Videos</$contentHeaderTag>\n";
             }
             foreach($videos as $video){
-                $html .= "<p><a href=\"#\">{$video->title} &raquo;</a></p>";
+                $html .= "<p><a href=\"{$video->getUrl()}\">{$video->title} &raquo;</a></p>";
             }
         }
 
-        if($whitePapers){
+        if(count($whitePapers)>0){
             if($useContentHeader==true){
                 $html .= "<$contentHeaderTag>White Papers</$contentHeaderTag>\n";
             }
             foreach($whitePapers as $whitePaper){
-                $html .= "<p><a href=\"#\">{$whitePaper->title} &raquo;</a></p>";
+                $html .= "<p><a href=\"$baseUrl{$whitePaper->getDownload()}\">{$whitePaper->title} &raquo;</a></p>";
             }
         }
 

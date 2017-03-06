@@ -53,11 +53,15 @@ class CaseStudy extends SuperclassContent{
     }
 
     public function getImageThumb(){
-        return '/img/case-study/'.$this->imageThumb;
+        return $this->imageThumb;
     }
 
     public function getImage(){
-        return '/img/case-study/'.$this->image;
+        return $this->image;
+    }
+
+    public function getUrl(){
+        return '/case-study/'.$this->key;
     }
 
 }
