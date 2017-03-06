@@ -2,7 +2,7 @@
     "name": "bdelamatre/delamatre-zend-cms",
     "description": "Lightweight CMS built on ZF2",
     "keywords": [
-        "bdelamatre",
+        "bdelamatre2",
         "delamatre",
         "byron",
         "zend framework",
@@ -18,8 +18,7 @@
         }
     ],
     "require": {
-        "bdelamatre/delamatre-zend": "dev-master",
-        "northys/css-inliner" : "dev-master"
+        "bdelamatre/delamatre-zend": "dev-master"
     },
     "autoload":{
         "psr-4":{
