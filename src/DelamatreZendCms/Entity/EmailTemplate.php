@@ -4,6 +4,7 @@ namespace DelamatreZendCms\Entity;
 
 use DelamatreZendCms\Entity\Superclass\Content as SuperclassContent;
 use Doctrine\ORM\Mapping as ORM;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /**
  *
@@ -35,10 +36,10 @@ class EmailTemplate extends SuperclassContent{
         if($email){
 
             //fill in all of the variables
-           /*
             $html = str_replace('[[title]]',$email->title,$html);
             $html = str_replace('[[description]]',$email->description,$html);
             $html = str_replace('[[image]]',$email->image,$html);
+            $html = str_replace('[[image_url]]',$email->image_url,$html);
             $html = str_replace('[[subtitle]]',$email->subtitle,$html);
             $html = str_replace('[[content]]',$email->content,$html);
             $html = str_replace('[[calltoaction]]',$email->calltoaction,$html);
@@ -49,16 +50,18 @@ class EmailTemplate extends SuperclassContent{
             }
             $html = str_replace('[[related_content]]',$email->generateRelatedContentHtml($baseUrl),$html);
 
+            //custom function for adding attachfile macros for ablebits
+            $html = str_replace('[[ablebits_attachments]]',$email->generateAblebitsAttachments('I:\Email Templates\attachments\\'),$html);
+
             $html = str_replace('[[signature]]',$email->generateSignature(),$html);
-           */
+
         }
 
+        $inliner = new CssToInlineStyles();
+        $html = $inliner->convert($html);
 
-        //if the theme color wans't overridden, set here.
-        /*if($themeColorChanged==false
-            && $this->theme_color){
-            $html = str_replace('[[theme_color]]',$this->theme_color,$html);
-        }*/
+        //fix-me: not the best way to handle this..
+        $html = str_replace("®",'&reg;',$html);
 
         return $html;
 

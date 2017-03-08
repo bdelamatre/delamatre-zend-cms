@@ -6,6 +6,7 @@ use Application\Controller\ResourceController;
 use DelamatreZend\Entity\User;
 use DelamatreZendCms\Entity\Superclass\Content as SuperclassContent;
 use DelamatreZendCmsAdmin\Form\Element\GenerateSignature;
+use DelamatreZendCmsAdmin\Form\Element\SignatureTemplate;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Mime\Message;
 use Zend\Mime\Mime;
@@ -37,6 +38,11 @@ class Email extends SuperclassContent{
     public $email_template_id;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    public $image_url;
+
+    /**
      * @ORM\Column(type="string",nullable=true);
      */
     public $theme_color;
@@ -65,6 +71,11 @@ class Email extends SuperclassContent{
      * @ORM\Column(type="integer")
      */
     public $generate_signature = 0;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    public $signature_template;
 
     /**
      * @ORM\Column(type="string",nullable=true)
@@ -214,10 +225,17 @@ class Email extends SuperclassContent{
     public function generateSignature(){
 
         if($this->generate_signature===GenerateSignature::YES_STATIC){
-            return ResourceController::generateSignatureHtml($this->signature_name,$this->signature_title,$this->signature_extension,$this->signature_mobile);
+            switch($this->signature_template){
+                case SignatureTemplate::TEMPLATE_VULCAN:
+                    return ResourceController::generateSignatureHtml($this->signature_name,$this->signature_title,$this->signature_extension,$this->signature_mobile);
+                case SignatureTemplate::TEMPLATE_VULCAN_SIMPLE:
+                    return ResourceController::generateSimpleSignatureHtml($this->signature_name,$this->signature_title,$this->signature_extension,$this->signature_mobile);
+                default:
+                    return ResourceController::generateSimpleSignatureHtml($this->signature_name,$this->signature_title,$this->signature_extension,$this->signature_mobile);
+            }
         }elseif($this->generate_signature===GenerateSignature::YES_AUTO){
             if(isset($this->user) && $this->user instanceof User){
-                return ResourceController::generateSignatureHtml($this->user->displayName,$this->user->title,$this->user->office,$this->user->mobile);
+                return ResourceController::generateSimpleSignatureHtml($this->user->displayName,$this->user->title,$this->user->office,$this->user->mobile);
             }else{
                 return '';
             }
@@ -227,7 +245,50 @@ class Email extends SuperclassContent{
 
     }
 
-    public function generateRelatedContentHtml($baseUrl=null,$useContentHeader=true,$contentHeaderTag='h6'){
+    public function getAttachments(){
+
+        $attachments = array();
+
+        //documents
+        /** @var Document $document */
+        foreach($this->documents as $document){
+
+            $filename = 'public/'.$document->getDownload();
+
+            $attachments[] = $filename;
+
+        }
+
+        //whitepapers
+        /** @var WhitePaper $whitePaper */
+        foreach($this->whitePapers as $whitePaper){
+
+            $filename = 'public/'.$whitePaper->getDownload();
+
+            $attachments[] = $filename;
+
+        }
+
+        return $attachments;
+
+    }
+
+    public function generateAblebitsAttachments($attachmentFilePath='I:\Email Templates\attachments\\'){
+
+        $html= '';
+        $attachments = $this->getAttachments();
+
+        foreach($attachments as $attachment){
+
+            $filename = basename($attachment);
+
+            $html .= "~%ATTACHFILE={$attachmentFilePath}{$filename} <br/>";
+        }
+
+        return $html;
+    }
+
+    public function generateRelatedContentHtml($baseUrl=null,$useContentHeader=true,$contentHeaderTag='h4'){
 
         $html = '';
         $caseStudies = $this->caseStudies;
@@ -240,7 +301,7 @@ class Email extends SuperclassContent{
                 $html .= "<$contentHeaderTag>Case Studies</$contentHeaderTag>\n";
             }
             foreach($caseStudies as $caseStudy){
-                $html .= "<p><a href=\"$baseUrl{$caseStudy->getUrl()}\">{$caseStudy->title} &raquo;</a></p>";
+                $html .= "<p><a href=\"$baseUrl{$caseStudy->getUrl()}\">{$caseStudy->title} >></a></p>";
             }
         }
 
@@ -249,7 +310,7 @@ class Email extends SuperclassContent{
                 $html .= "<$contentHeaderTag>Documents</$contentHeaderTag>\n";
             }
             foreach($documents as $document){
-                $html .= "<p><a href=\"$baseUrl{$document->getDownload()}\">{$document->title} &raquo;</a></p>";
+                $html .= "<p><a href=\"$baseUrl{$document->getDownload()}\">{$document->title} >></a></p>";
             }
         }
 
@@ -258,7 +319,7 @@ class Email extends SuperclassContent{
                 $html .= "<$contentHeaderTag>Videos</$contentHeaderTag>\n";
             }
             foreach($videos as $video){
-                $html .= "<p><a href=\"{$video->getUrl()}\">{$video->title} &raquo;</a></p>";
+                $html .= "<p><a href=\"{$video->getUrl()}\">{$video->title} >></a></p>";
             }
         }
 
@@ -267,7 +328,7 @@ class Email extends SuperclassContent{
                 $html .= "<$contentHeaderTag>White Papers</$contentHeaderTag>\n";
             }
             foreach($whitePapers as $whitePaper){
-                $html .= "<p><a href=\"$baseUrl{$whitePaper->getDownload()}\">{$whitePaper->title} &raquo;</a></p>";
+                $html .= "<p><a href=\"$baseUrl{$whitePaper->getDownload()}\">{$whitePaper->title} >></a></p>";
             }
         }
 
