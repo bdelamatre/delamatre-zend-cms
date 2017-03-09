@@ -29,6 +29,11 @@ class Video extends SuperclassContent{
     public $display_on_website = 0;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    public $category;
+
+    /**
      * @ORM\Column(type="string")
      */
     public $youtubeUrl;

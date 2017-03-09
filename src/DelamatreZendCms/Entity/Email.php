@@ -245,7 +245,7 @@ class Email extends SuperclassContent{
 
     }
 
-    public function getAttachments(){
+    public function getAttachments($prepend='public'){
 
         $attachments = array();
 
@@ -253,7 +253,7 @@ class Email extends SuperclassContent{
         /** @var Document $document */
         foreach($this->documents as $document){
 
-            $filename = 'public/'.$document->getDownload();
+            $filename = $prepend.$document->getDownload();
 
             $attachments[] = $filename;
 
@@ -263,7 +263,7 @@ class Email extends SuperclassContent{
         /** @var WhitePaper $whitePaper */
         foreach($this->whitePapers as $whitePaper){
 
-            $filename = 'public/'.$whitePaper->getDownload();
+            $filename = $prepend.$whitePaper->getDownload();
 
             $attachments[] = $filename;
 
