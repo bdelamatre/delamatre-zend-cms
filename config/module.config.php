@@ -149,6 +149,9 @@ return array(
         ),
     ),
 
+    'module_layouts' => array(
+    ),
+
     'view_manager' => array(
         'template_map' => array(
             //'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
