@@ -1,0 +1,92 @@
+<h1>Web Content Cheat Sheet</h1>
+<p>For full reference guides, use <a href="http://www.w3schools.com" target="_blank">www.w3schools.com</a></p>
+<ul>
+    <li><a href="http://www.w3schools.com/html" target="_blank">HTML 4</a></li>
+    <li><a href="http://www.w3schools.com/html/html5_intro.asp" target="_blank">HTML 5</a></li>
+    <li><a href="http://www.w3schools.com/bootstrap" target="_blank">Bootstrap</a></li>
+    <li><a href="http://www.w3schools.com/css" target="_blank">CSS</a></li>
+</ul>
+
+<h2>Design Principles</h2>
+<ul>
+    <li><strong>Good design gets out of the way</strong> - If you have to think about how use something than there is probably a better way to design it. Avoid flashy, cluttering or complicated design elements except when necessary.</li>
+    <li><strong>Avoid reliance on WYSIWYG</strong> - What-You-See-Is-What-You-Get editors, while tempting, never produce as clean of content as hand written content. </li>
+    <li><strong>Avoid tables except for tabular data</strong> - Do not use tables for styling. Instead, use Bootstrap's <a href="http://getbootstrap.com/css/#grid">grid system</a></li>
+    <li><strong>Do not use fixed width/height except when necessary</strong> - Fixed height and width elements can negatively impact responsive design. Think carefully before adding them</li>
+    <li><strong>Avoid inline CSS styling</strong> - Inline CSS styling is more difficult to maintain. Use globally available classes when possible.</li>
+    <li><strong>Use the right size image</strong> - Do not scale large images down or small images up. The original image height/width should match what is needed.</li>
+    <li><strong>Use high quality but optimized images</strong> - Use <a href="http://luci.criosweb.ro/riot/">RIOT</a> for optimizing images</li>
+    <li><strong>Vertical is better than horizontal</strong> - If you need display more content, displaying content vertically is usually the better choice. Horizontal content must either collapse or scroll in responsive design.</li>
+</ul>
+
+<h2>HTML</h2>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Element</th>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>&lt;p&gt;&lt;/p&gt;</td>
+        <td>Paragraph</td>
+        <td>Each paragraph should be wrapped in a &lt;p&gt; tag</td>
+    </tr>
+    <tr>
+        <td>&lt;img src="" alt="" title=""/&gt;</td>
+        <td>Images</td>
+        <td>src="" should contain the (relative) path to the image, alt="" displayed when image isn't available (including screen readers) and title="" is short description of the image</td>
+    </tr>
+    <tr>
+        <td>&lt;sup&gt;&amp;reg;&lt;/sup&gt;</td>
+        <td>Registered trademark</td>
+        <td>Registered trademark should be superscripted</td>
+    </tr>
+    <tr>
+        <td>&lt;br/&gt;</td>
+        <td>Break</td>
+        <td>Forces a newline. CSS margin/padding is usually preferred over adding multiple breaks.</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Dynamic Content</h2>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Function</th>
+        <th>Example</th>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ url($route,array $parameters) }}</td>
+        <td>{{ url('technology',array('key'=>'thermal-desorption'))}}</td>
+        <td>Dynamic URL</td>
+        <td>When linking to content within the site, use the url() function to dynamically build the route</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<h2>Routes</h2>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Route Name</th>
+        <th>URI</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->routes as $name=>$route): ?>
+        <tr>
+            <td><?=$name?></td>
+            <td><?=$route['options']['route']?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

@@ -1,0 +1,159 @@
+<!-- tab : technologies -->
+<?php if(property_exists($this->entity,'technologies')): ?>
+    <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='content-technologies'){echo 'active';} ?>" id="content-technologies">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Related Technologies</h3>
+            </div>
+            <div class="col-sm-8 text-right">
+                <br/>
+                <a href="/admin/<?=$this->routeName?>/add-technology?id=<?=$this->entity->id?>" class="btn btn-primary">Add Technology</a>
+            </div>
+        </div>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th style="width:150px;">Thumb</th>
+                <th style="width:200px;">Key</th>
+                <th>Title</th>
+                <th style="width: 25px;"></th>
+            </tr>
+            <?php foreach($this->entity->technologies as $technology): ?>
+                <tr>
+                    <td><img src="<?=$technology->getImageThumb()?>" title="<?=$technology->title?>" class="img-responsive" /></td>
+                    <td><?=$technology->key?></td>
+                    <td><?=$technology->title?></td>
+                    <td>
+                        <a href="/admin/<?=$this->routeName?>/delete-technology?id=<?=$this->entity->id?>&technology=<?=$technology->id?>"><?=$this->icon('fa-trash','fa-lg')?></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php endif; ?>
+
+<!-- tab : case studies -->
+<?php if(property_exists($this->entity,'caseStudies')): ?>
+    <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='content-case-studies'){echo 'active';} ?>" id="content-case-studies">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Related Case Studies</h3>
+            </div>
+            <div class="col-sm-8 text-right">
+                <a href="/admin/<?=$this->routeName?>/add-case-study?id=<?=$this->entity->id?>" class="btn btn-primary">Add Case Study</a>
+            </div>
+        </div>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th style="width:125px;">Thumb</th>
+                <th>Key</th>
+                <th>Title</th>
+                <th style="width: 25px;"></th>
+            </tr>
+            <?php foreach($this->entity->caseStudies as $caseStudy): ?>
+                <tr>
+                    <td><img src="<?=$caseStudy->getImageThumb()?>" title="<?=$caseStudy->title?>" class="img-responsive" /></td>
+                    <td><?=$caseStudy->key?></td>
+                    <td><?=$caseStudy->title?></td>
+                    <td>
+                        <a href="/admin/<?=$this->routeName?>/delete-case-study?id=<?=$this->entity->id?>&case-study=<?=$caseStudy->id?>"><?=$this->icon('fa-trash','fa-lg')?></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>                </div>
+<?php endif; ?>
+
+<!-- tab : documents -->
+<?php if(property_exists($this->entity,'documents')): ?>
+    <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='content-documents'){echo 'active';} ?>" id="content-documents">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Related Documents</h3>
+            </div>
+            <div class="col-sm-8 text-right">
+                <a href="/admin/<?=$this->routeName?>/add-document?id=<?=$this->entity->id?>" class="btn btn-primary">Add Document</a>
+            </div>
+        </div>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th style="width:125px;">Thumb</th>
+                <th>Key</th>
+                <th>Title</th>
+                <th style="width: 25px;"></th>
+            </tr>
+            <?php foreach($this->entity->documents as $document): ?>
+                <tr>
+                    <td><img src="<?=$document->getImageThumb()?>" title="<?=$document->title?>" class="img-responsive" /></td>
+                    <td><?=$document->key?></td>
+                    <td><?=$document->title?></td>
+                    <td>
+                        <a href="/admin/<?=$this->routeName?>/delete-document?id=<?=$this->entity->id?>&document=<?=$document->id?>"><?=$this->icon('fa-trash','fa-lg')?></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php endif; ?>
+
+<!-- tab : videos -->
+<?php if(property_exists($this->entity,'videos')): ?>
+    <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='content-videos'){echo 'active';} ?>" id="content-videos">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Related Videos</h3>
+            </div>
+            <div class="col-sm-8 text-right">
+                <a href="/admin/<?=$this->routeName?>/add-video?id=<?=$this->entity->id?>" class="btn btn-primary">Add Video</a>
+            </div>
+        </div>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th style="width:125px;">Thumb</th>
+                <th>Key</th>
+                <th>Title</th>
+                <th style="width: 25px;"></th>
+            </tr>
+            <?php foreach($this->entity->videos as $video): ?>
+                <tr>
+                    <td><img src="<?=$video->getImageThumb()?>" title="<?=$video->title?>" class="img-responsive" /></td>
+                    <td><?=$video->key?></td>
+                    <td><?=$video->title?></td>
+                    <td>
+                        <a href="/admin/<?=$this->routeName?>/delete-video?id=<?=$this->entity->id?>&video=<?=$video->id?>"><?=$this->icon('fa-trash','fa-lg')?></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php endif; ?>
+
+<!-- tab : white papers -->
+<?php if(property_exists($this->entity,'whitePapers')): ?>
+    <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='content-white-papers'){echo 'active';} ?>" id="content-white-papers">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Related White Papers</h3>
+            </div>
+            <div class="col-sm-8 text-right">
+                <a href="/admin/<?=$this->routeName?>/add-white-paper?id=<?=$this->entity->id?>" class="btn btn-primary">Add White Paper</a>
+            </div>
+        </div>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th style="width:125px;">Thumb</th>
+                <th>Key</th>
+                <th>Title</th>
+                <th style="width: 25px;"></th>
+            </tr>
+            <?php foreach($this->entity->whitePapers as $whitePaper): ?>
+                <tr>
+                    <td><img src="<?=$whitePaper->getImageThumb()?>" title="<?=$whitePaper->title?>" class="img-responsive" /></td>
+                    <td><?=$whitePaper->key?></td>
+                    <td><?=$whitePaper->title?></td>
+                    <td>
+                        <a href="/admin/<?=$this->routeName?>/delete-white-paper?id=<?=$this->entity->id?>&white-paper=<?=$whitePaper->id?>"><?=$this->icon('fa-trash','fa-lg')?></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php endif; ?>

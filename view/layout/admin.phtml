@@ -1,0 +1,167 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+<?php echo $this->headTitle($this->config()['myapp']['appendTitle'])->setSeparator(' - ')->setAutoEscape(false); ?>
+<?php echo $this->headMeta()
+    ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+    ->appendHttpEquiv('X-UA-Compatible', 'IE=edge'); ?>
+<?php echo $this->headScript(); ?>
+<?php echo $this->inlineScript() ?>
+<?php echo $this->adobeTypeKit()?>
+<?php echo $this->googleAnalytics(null,null,array('1'=>session_id(),'2'=>$this->IPAddress())); ?>
+</head>
+<?php if($this->zfcUserIdentity()
+&& $this->config()['myapp']['environment']['type']!=ENVIRONMENT_TYPE_PRODUCTION): ?>
+    <body class="wf-loading body-adjust <?php if(isset($_SESSION['feelthemagic'])&&$_SESSION['feelthemagic']==true){echo'feelthemagic';}?>">
+<?php else: ?>
+    <body class="wf-loading  <?php if(isset($_SESSION['feelthemagic'])&&$_SESSION['feelthemagic']==true){echo'feelthemagic';}?>"">
+<?php endif; ?>
+
+    <?php //$this->partial('layout/components/environment-alert.phtml')?>
+
+    <?php if($this->zfcUserIdentity()
+    && $this->config()['myapp']['environment']['type']!=ENVIRONMENT_TYPE_PRODUCTION): ?>
+        <nav class="navbar navbar-inverse navbar-fixed-top environment-adjust">
+    <?php else: ?>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+    <?php endif; ?>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <!--button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">
+                        <h1>Toggle navigation</h1>
+                    </span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button-->
+                <!--a class="navbar-brand" href="/admin">
+                    <img src="<?=$this->config()['myapp']['logo']?>" style="max-height:72px;padding:5px;" />
+                </a-->
+                <a class="navbar-brand" href="/admin">
+                    <h4><?=$this->config()['myapp']['name']?> Dashboard</h4>
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <!--ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul-->
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <?php if($this->ZfcUserIdentity()): ?>
+                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 sidebar">
+                    <h4><?=$this->fontAwesome('fa-dashboard')?>&nbsp;&nbsp;Overview</h4>
+                    <hr/>
+
+                    <!-- dashboard -->
+                    <ul class="nav nav-sidebar">
+                        <li><a href="/admin">Dashboard</a></li>
+                    </ul>
+
+                    <!-- marketing -->
+                    <?php if(in_array($this->ZfcUserIdentity()->getType(),array('user','admin','superadmin'))): ?>
+                        <h4><?=$this->fontAwesome('fa-users')?>&nbsp;&nbsp;Marketing</h4>
+                        <hr/>
+                        <!--h4>&nbsp;&nbsp;Leads</h4-->
+                        <ul class="nav nav-sidebar">
+                            <li><a href="/admin/lead/index">Leads</a></li>
+                            <li><a href="/admin/roi-calculator/index">ROI Calculations</a></li>
+                        </ul>
+                    <?php endif; ?>
+
+                    <!-- email -->
+                    <?php if(in_array($this->ZfcUserIdentity()->getType(),array('user','admin','superadmin'))): ?>
+                        <h4><?=$this->fontAwesome('fa-envelope')?>&nbsp;&nbsp;E-Mail</h4>
+                        <hr/>
+                        <!--h4>&nbsp;&nbsp;Leads</h4-->
+                        <ul class="nav nav-sidebar">
+                            <li><a href="/admin/email/index">E-Mails</a></li>
+                            <li><a href="/admin/email-template/index">Templates</a></li>
+                        </ul>
+                    <?php endif; ?>
+
+                    <!-- cms -->
+                    <?php if(in_array($this->ZfcUserIdentity()->getType(),array('user','admin','superadmin'))): ?>
+                        <h4><?=$this->fontAwesome('fa-file-text')?>&nbsp;&nbsp;CMS</h4>
+                        <hr/>
+                        <h4>&nbsp;&nbsp;Custom Objects</h4>
+                        <ul class="nav nav-sidebar">
+                            <li><a href="/admin/application/index">Applications</a></li>
+                            <li><a href="/admin/industry/index">Industries</a></li>
+                            <li><a href="/admin/service/index">Services</a></li>
+                            <li><a href="/admin/technology/index">Technologies</a></li>
+                        </ul>
+                        <h4>&nbsp;&nbsp;Built-in Objects</h4>
+                        <ul class="nav nav-sidebar">
+                            <li><a href="/admin/blog/index">Blog</a></li>
+                            <li><a href="/admin/case-study/index">Case Studies</a></li>
+                            <li><a href="/admin/content/index">Content</a></li>
+                            <li><a href="/admin/document/index">Documents</a></li>
+                            <li><a href="/admin/gallery/index">Galleries</a></li>
+                            <li><a href="/admin/video/index">Videos</a></li>
+                            <li><a href="/admin/white-paper/index">White Papers</a></li>
+                        </ul>
+                    <?php endif; ?>
+
+                    <!-- security -->
+                    <?php if(in_array($this->ZfcUserIdentity()->getType(),array('admin','superadmin'))): ?>
+                    <h4><?=$this->fontAwesome('fa-lock')?>&nbsp;&nbsp;Security</h4>
+                    <hr/>
+                    <ul class="nav nav-sidebar">
+                        <li><a href="/admin/user/index">Users</a></li>
+                        <!--li><a href="/admin/organization/index">Organizations</a></li-->
+                    </ul>
+                    <?php endif; ?>
+
+                    <h4><?=$this->fontAwesome('fa-cogs')?>&nbsp;&nbsp;System</h4>
+                    <hr/>
+                    <?php if(in_array($this->ZfcUserIdentity()->getType(),array('user','admin','superadmin'))): ?>
+                        <h4>&nbsp;&nbsp;<?=$this->fontAwesome('fa-wrench')?>&nbsp;&nbsp;Tools</h4>
+                        <ul class="nav nav-sidebar">
+                            <li><a href="/admin/filemanager/index">Filemanager</a></li>
+                        </ul>
+                    <?php endif; ?>
+
+                    <?php if(in_array($this->ZfcUserIdentity()->getType(),array('superadmin'))): ?>
+                        <h4>&nbsp;&nbsp;<?=$this->fontAwesome('fa-cog')?>&nbsp;&nbsp;Settings</h4>
+                        <ul class="nav nav-sidebar">
+                            <li><a href="/admin/settings/configuration">Configuration</a></li>
+                            <li><a href="/admin/settings/logs">Logs</a></li>
+                            <li><a href="/admin/settings/phpinfo">PHP Info</a></li>
+                        </ul>
+                    <?php endif; ?>
+
+                    <h4><?=$this->fontAwesome('fa-question')?>&nbsp;&nbsp;Help</h4>
+                    <hr/>
+                    <ul class="nav nav-sidebar">
+                        <li><a href="/admin/help/content">Cheat Sheet</a></li>
+                        <?php if(isset($_SESSION['feelthemagic'])&&$_SESSION['feelthemagic']==true): ?>
+                            <li><a href="/admin/help/feel-the-magic?done=sadface">Done Feeling The Magic<sup>&reg;</sup></a></li>
+                        <?php else: ?>
+                            <li><a href="/admin/help/feel-the-magic">Feel The Magic<sup>&reg;</sup></a></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+            <div class="col-xs-8 col-sm-9 col-md-10 col-lg-11">
+
+                <!-- content -->
+                <?php echo $this->content; ?>
+
+            </div>
+        </div>
+    </div>
+
+<?php echo $this->headLink(); ?>
+<?php echo $this->headStyle(); ?>
+</body>
+</html>

@@ -15,7 +15,7 @@
             <h2><a class="emphasis" href="tel:<?=$this->config()['myapp']['contact']['phone_link']?>"><i class="fa fa-phone fa-1x" aria-hidden="true"></i> &nbsp; <?=$this->config()['myapp']['contact']['phone_formatted']?></a></h2>
         </div>
 
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" onclick="preventFurtherPopups();" data-dismiss="modal">Don't Show Again</button>
         <button type="button" class="btn btn-emphasis" onclick="submitContactPopup('#contact-popup-form');">Submit</button>
     </div>
 

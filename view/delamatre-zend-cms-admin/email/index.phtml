@@ -1,0 +1,54 @@
+<?php
+if(isset($_GET['category'])){
+    $this->category = $_GET['category'];
+}else{
+    $this->category = null;
+}
+
+
+//groups the e-mails by category
+$grouped = array();
+/* @var \DelamatreZendCms\Entity\Email $record */
+foreach($this->records as $email) {
+    $grouped[$email->category][] = $email;
+}
+
+$additionalActions = '<a href="/admin/email/download-all?category='.$this->category.'" class="btn btn-primary">Download All</a>';
+?>
+<?=$this->partial('delamatre-zend-cms-admin/components/entity-index-header.phtml',array('routeName'=>$this->routeName,'name'=>'E-Mails','recordCount'=>$this->recordCount,'additionalActions'=>$additionalActions))?>
+
+<?php if(!empty($this->category)): ?>
+    <div class="alert alert-info">
+        You are looking at emails for category <?=$this->category?> only. <a href="/admin/email/index">View all emails</a>.
+    </div>
+<?php endif; ?>
+
+<?php foreach($grouped as $category=>$emails):?>
+    <h2><a href="/admin/email/index?category=<?=$record->category?>"><?=$category?></a></h2>
+    <hr/>
+    <div class="row">
+    <?php $i=0;foreach($emails as $email):$i++; ?>
+        <div class="col-md-3">
+            <h4><?=$email->subject?></h4>
+            <div class="text-right">
+                <a href="/admin/email/download-html?id=<?=$email->id?>"><?=$this->icon('fa-code')?></a>
+                <a href="/admin/email/send-test?id=<?=$email->id?>" target="_blank"><?=$this->icon('fa-envelope')?></a>
+                <a href="/admin/<?=$this->routeName?>/form?id=<?=$email->id?>"><?=$this->icon('fa-pencil-square','fa-lg')?></a>
+            </div>
+            <a href="/admin/email/preview?id=<?=$email->id?>" target="_blank"><img class="img img-responsive" src="/admin/email/screenshot?id=<?=$email->id?>" /></a>
+            <br/>
+            <?php $attachments = $email->getAttachments(''); ?>
+            <?php if(!empty($attachments)): ?>
+                <p>Attachments:</p>
+                <?php foreach($attachments as $attachment): ?>
+                    <p><a href="<?=$attachment?>" download><?=$attachment?></a></p>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+        <?php if($i==4):$i=0; ?>
+            </div>
+            <div class="row">
+        <?php endif; ?>
+    <?php endforeach; ?>
+    </div>
+<?php endforeach ; ?>

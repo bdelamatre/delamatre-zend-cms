@@ -1,0 +1,51 @@
+<?php
+if(isset($_GET['category'])){
+    $this->category = $_GET['category'];
+}else{
+    $this->category = null;
+}
+
+$additionalActions = '<a href="/admin/email/download-all?category='.$this->category.'" class="btn btn-primary">Download All</a>';
+?>
+<?=$this->partial('delamatre-zend-cms-admin/components/entity-index-header.phtml',array('routeName'=>$this->routeName,'name'=>'E-Mails','recordCount'=>$this->recordCount,'additionalActions'=>$additionalActions))?>
+
+<?php if(!empty($this->category)): ?>
+    <div class="alert alert-info">
+        You are looking at emails for category <?=$this->category?> only. <a href="/admin/email/index">View all emails</a>.
+    </div>
+<?php endif; ?>
+
+
+<table class="table table-hover table-condensed">
+    <tr>
+        <!--th style="width:50px;"></th-->
+        <th>Preview</th>
+        <th>Key</th>
+        <th>Subject</th>
+        <th>Category</th>
+        <th style="width:200px;">E-Mail Template</th>
+        <th style="width:25px;"></th>
+        <th style="width:25px;"></th>
+        <th style="width:25px;"></th>
+        <th style="width:25px;"></th>
+    </tr>
+    <?php foreach($this->records as $record):
+        /* @var \Application\Entity\CaseStudy $record */
+
+    ?>
+        <tr class="<?php if($record->active==false){echo 'danger';}?>">
+            <!--td><input type="checkbox" name="record[<?=$record->id?>]"></td-->
+            <td>
+                <a href="/admin/email/preview?id=<?=$record->id?>"><img class="img img-responsive" style="max-width:200px;" src="/admin/email/screenshot?id=<?=$record->id?>" /></a>
+            </td>
+            <td><?=$record->key?></td>
+            <td><?=$record->subject?></td>
+            <td><a href="/admin/email/index?category=<?=$record->category?>"><?=$record->category?></a></td>
+            <td><a href="/admin/email-template/form?id=<?=$record->email_template_id?>"><?=$record->emailTemplate->title?></a></td>
+            <td><a href="/admin/email/download-html?id=<?=$record->id?>"><?=$this->icon('fa-code')?></a></td>
+            <td><a href="/admin/email/preview?id=<?=$record->id?>" target="_blank"><?=$this->icon('fa-file-text')?></a></td>
+            <td><a href="/admin/email/send-test?id=<?=$record->id?>" target="_blank"><?=$this->icon('fa-envelope')?></a></td>
+            <td><a href="/admin/<?=$this->routeName?>/form?id=<?=$record->id?>"><?=$this->icon('fa-pencil-square','fa-lg')?></a></td>
+        </tr>
+    <?php endforeach; ?>
+</table>

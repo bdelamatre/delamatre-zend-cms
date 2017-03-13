@@ -56,7 +56,7 @@ class BlogController extends AbstractActionController
             ->from('DelamatreZendCms\Entity\Blog','a')
             ->where('a.key=:key')
             ->setParameter('key',$key)
-            ->getQuery()->getSingleResult();
+            ->getQuery()->getOneOrNullResult();
 
         if(empty($post)){
             throw new \Exception("blog post with key `$key` not found");

@@ -1,0 +1,30 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+<?php echo $this->headTitle($this->config()['myapp']['appendTitle'])->setSeparator(' - ')->setAutoEscape(false); ?>
+<?php echo $this->headMeta()
+    ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+    ->appendHttpEquiv('X-UA-Compatible', 'IE=edge'); ?>
+<?php echo $this->adobeTypeKit()?>
+<?php echo $this->googleAnalytics(null,null,array('1'=>session_id(),'2'=>$this->IPAddress())); ?>
+</head>
+<?php if($this->zfcUserIdentity()
+&& $this->config()['myapp']['environment']['type']!=ENVIRONMENT_TYPE_PRODUCTION): ?>
+    <body class="wf-loading body-adjust <?php if(isset($_SESSION['feelthemagic'])&&$_SESSION['feelthemagic']==true){echo'feelthemagic';}?>"" id="login">
+<?php else: ?>
+    <body class="wf-loading <?php if(isset($_SESSION['feelthemagic'])&&$_SESSION['feelthemagic']==true){echo'feelthemagic';}?>"" id="login">
+<?php endif; ?>
+
+    <?=$this->partial('layout/components/environment-alert.phtml')?>
+
+    <!-- content -->
+    <?php echo $this->content; ?>
+
+<?php echo $this->headLink(); ?>
+<?php echo $this->headStyle(); ?>
+<?php echo $this->headScript(); ?>
+<?php echo $this->inlineScript() ?>
+</body>
+</html>

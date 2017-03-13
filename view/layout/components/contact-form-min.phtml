@@ -1,5 +1,22 @@
 <?php
 
+if(!isset($this->application)
+    && isset($_GET['application'])){
+    $this->application = $_GET['application'];
+}elseif($this->application instanceof \Application\Entity\Application){
+    $this->application = $this->application->title;
+}
+
+if(!isset($this->industry)
+    && isset($_GET['industry'])){
+    $this->industry = $_GET['industry'];
+}
+
+if(!isset($this->description)
+    && isset($_GET['description'])){
+    $this->description = $_GET['description'];
+}
+
 if(!isset($this->id)){
     $this->id = 'contact-form-min';
 }
@@ -77,7 +94,7 @@ if(!isset($this->showApplication)){
 
             <div class="form-group">
                 <label for="description">How can we help you?</label>
-                <textarea class="form-control" id="description" name="description" rows="5" wrap="soft" placeholder="I am in need of a quote for a thermal desorption unit for my project..." required></textarea>
+                <textarea class="form-control" id="description" name="description" rows="5" wrap="soft" placeholder="I am in need of a quote for a thermal desorption unit for my project..." required><?=$this->description?></textarea>
             </div>
 
 

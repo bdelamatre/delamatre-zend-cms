@@ -1,0 +1,19 @@
+<?php if(in_array($this->ZfcUserIdentity()->getType(),array('admin','superadmin'))): ?>
+
+    <div class="section-admin">
+        <h1>Security</h1>
+        <p>Manage security for the site.</p>
+
+        <!-- security section -->
+        <div class="row row-admin">
+
+            <!-- users -->
+            <?php echo $this->partial('delamatre-zend-cms-admin/admin/navigation-components/user.phtml'); ?>
+            <!-- organizations -->
+            <?php echo $this->partial('delamatre-zend-cms-admin/admin/navigation-components/organization.phtml'); ?>
+
+        </div>
+
+    </div>
+
+<?php endif; ?>

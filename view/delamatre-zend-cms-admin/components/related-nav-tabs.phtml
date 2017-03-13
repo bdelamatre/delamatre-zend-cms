@@ -1,0 +1,27 @@
+<?php if($this->entity->id): ?>
+    <?php if(property_exists($this->entity,'technologies')): ?>
+        <li role="presentation" class="<?php if($this->defaultTab=='content-technologies'){echo 'active';} ?>">
+            <a href="#content-technologies" aria-controls="analytics" role="tab" data-toggle="tab">Technologies (<?=count($this->entity->technologies)?>)</a>
+        </li>
+    <?php endif; ?>
+    <?php if(property_exists($this->entity,'caseStudies')): ?>
+        <li role="presentation" class="<?php if($this->defaultTab=='content-case-studies'){echo 'active';} ?>">
+            <a href="#content-case-studies" aria-controls="analytics" role="tab" data-toggle="tab">Case Studies (<?=count($this->entity->caseStudies)?>)</a>
+        </li>
+    <?php endif; ?>
+    <?php if(property_exists($this->entity,'documents')): ?>
+        <li role="presentation" class="<?php if($this->defaultTab=='content-documents'){echo 'active';} ?>">
+            <a href="#content-documents" aria-controls="analytics" role="tab" data-toggle="tab">Documents (<?=count($this->entity->documents)?>)</a>
+        </li>
+    <?php endif; ?>
+    <?php if(property_exists($this->entity,'videos')): ?>
+        <li role="presentation" class="<?php if($this->defaultTab=='content-videos'){echo 'active';} ?>">
+            <a href="#content-videos" aria-controls="analytics" role="tab" data-toggle="tab">Videos (<?=count($this->entity->videos)?>)</a>
+        </li>
+    <?php endif; ?>
+    <?php if(property_exists($this->entity,'whitePapers')): ?>
+        <li role="presentation" class="<?php if($this->defaultTab=='content-white-papers'){echo 'active';} ?>">
+            <a href="#content-white-papers" aria-controls="analytics" role="tab" data-toggle="tab">White Papers (<?=count($this->entity->whitePapers)?>)</a>
+        </li>
+    <?php endif; ?>
+<?php endif; ?>

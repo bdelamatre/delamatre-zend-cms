@@ -1,0 +1,31 @@
+<h1>Filemanager</h1>
+
+<div id="elfinder"></div>
+
+<style type="text/css">
+    .elfinder-workzone{
+        margin-top:25px;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var options = {
+            url  : '/admin/filemanager/connector',
+            lang : 'en',
+            width : 'auto',
+            height : '600px',
+            uiOptions : {
+
+                // directories tree options
+                tree : {
+                    // expand current root on init
+                    openRootOnLoad : false,
+                    // auto load current dir parents
+                    syncTree : true
+                }
+
+            }
+        };
+        $('#elfinder').elfinder(options);
+    });
+</script>

@@ -1,0 +1,107 @@
+<?=$this->form()->openTag($this->form->setAttribute('onsubmit','return postForm();'))?>
+
+<?=$this->partial('delamatre-zend-cms-admin/components/entity-form-header.phtml',array('routeName'=>$this->routeName,'name'=>'E-Mail Template','entity'=>$this->entity))?>
+
+<?php if($this->entity->id && $this->entity->active==false): ?>
+    <div class="alert alert-danger">
+        <p>This record is inactive. Click `Activate` above to activate this record.</p>
+    </div>
+<?php endif; ?>
+
+    <!-- tab navigation -->
+    <ul class="nav nav-tabs nav-tabs-admin" role="tablist">
+        <li role="presentation" class="<?php if(!$this->defaultTab || $this->defaultTab=='content-details'){echo 'active';} ?>">
+            <a href="#content-details" aria-controls="lead-details" role="tab" data-toggle="tab">E-Mail Template Details</a>
+        </li>
+        <li role="presentation" class="<?php if($this->defaultTab=='colors'){echo 'active';} ?>">
+            <a href="#colors" aria-controls="colors" role="tab" data-toggle="tab">Colors</a>
+        </li>
+    </ul>
+
+    <!-- tab content -->
+    <div class="tab-content tab-content-admin">
+
+        <!-- tab : content details -->
+        <div role="tabpanel" class="tab-pane <?php if(!$this->defaultTab || $this->defaultTab=='content-details'){echo 'active';} ?>" id="content-details">
+
+            <div style="margin:0 25px 0 25px;">
+                <?=$this->formRow($this->form->get('key'))?>
+                <?=$this->formRow($this->form->get('title'))?>
+                <?=$this->formRow($this->form->get('description'))?>
+            </div>
+
+        </div>
+
+        <!-- tab : meta data -->
+        <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='colors'){echo 'active';} ?>" id="colors">
+
+            <div class="alert">
+                <p>These colors will override the default theme colors. For branding colors visit: <a href="/brand">branding</a></a></p>
+            </div>
+
+            <div style="margin:0 25px 0 25px;">
+                <?=$this->formRow($this->form->get('theme_color'))?>
+            </div>
+
+        </div>
+
+    </div><!-- end: tab content -->
+
+    <div class="row">
+        <div class="col-md-4">
+        <h2>E-Mail Template</h2>
+        </div>
+        <div class="col-md-8 text-right">
+            <br/>
+            <a class="btn btn-emphasis" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><?=$this->fontAwesome('fa-question')?></a>
+            <a class="btn btn-emphasis" href="/admin/<?=$this->routeName?>/preview?id=<?=$this->entity->id?>" target="_blank">Preview</a>
+        </div>
+    </div>
+
+    <div class="collapse" id="collapseExample">
+        <div class="well">
+            <p>Variables:</p>
+            <table class="table table-condensed">
+                <tr>
+                    <td>$title</td>
+                    <td>Title</td>
+                </tr>
+                <tr>
+                    <td>$description</td>
+                    <td>Description, usually to proceed the title.</td>
+                </tr>
+                <tr>
+                    <td>$image</td>
+                    <td>Image, usually the hero image.</td>
+                </tr>
+                <tr>
+                    <td>$subtitle</td>
+                    <td>Sub-Title, usually to preceed the e-mail contents.</td>
+                </tr>
+                <tr>
+                    <td>$content</td>
+                    <td>The primary content for the e-mail</td>
+                </tr>
+                <tr>
+                    <td>$calltoaction</td>
+                    <td>Call to action title</td>
+                </tr>
+                <tr>
+                    <td>$calltoaction_url</td>
+                    <td>Call to action url</td>
+                </tr>
+                <tr>
+                    <td>$related_content</td>
+                    <td>Output related content</td>
+                </tr>
+                <tr>
+                    <td>$theme_color</td>
+                    <td>use theme color</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <?=$this->partial('delamatre-zend-cms-admin/components/wysiwyg.phtml',array('content'=>$this->entity->content,'formElement'=>$this->form->get('content')))?>
+
+<?=$this->form()->closeTag($this->form)?>

@@ -1,0 +1,72 @@
+<?=$this->form()->openTag($this->form->setAttribute('onsubmit','return postForm();'))?>
+
+<?=$this->partial('delamatre-zend-cms-admin/components/entity-form-header.phtml',array('routeName'=>$this->routeName,'name'=>'White Paper','entity'=>$this->entity))?>
+
+<?php if($this->entity->id && $this->entity->active==false): ?>
+    <div class="alert alert-danger">
+        <p>This record is inactive. Click `Activate` above to activate this record.</p>
+    </div>
+<?php endif; ?>
+
+    <!-- tab navigation -->
+    <ul class="nav nav-tabs nav-tabs-admin" role="tablist">
+        <li role="presentation" class="<?php if(!$this->defaultTab || $this->defaultTab=='content-details'){echo 'active';} ?>">
+            <a href="#content-details" aria-controls="lead-details" role="tab" data-toggle="tab">Content Details</a>
+        </li>
+        <li role="presentation" class="<?php if($this->defaultTab=='meta-data'){echo 'active';} ?>">
+            <a href="#meta-data" aria-controls="analytics" role="tab" data-toggle="tab">Meta Data</a>
+        </li>
+        <li role="presentation" class="<?php if($this->defaultTab=='content-other'){echo 'active';} ?>">
+            <a href="#content-other" aria-controls="analytics" role="tab" data-toggle="tab">Other</a>
+        </li>
+    </ul>
+
+    <!-- tab content -->
+    <div class="tab-content tab-content-admin">
+
+        <!-- tab : content details -->
+        <div role="tabpanel" class="tab-pane <?php if(!$this->defaultTab || $this->defaultTab=='content-details'){echo 'active';} ?>" id="content-details">
+
+            <div class="alert">
+                <p>Key must be unique.</p>
+            </div>
+
+            <div style="margin:0 25px 0 25px;">
+                <?=$this->formRow($this->form->get('key'))?>
+                <?=$this->formRow($this->form->get('display_on_website'))?>
+                <?=$this->formRow($this->form->get('title'))?>
+            </div>
+
+        </div>
+
+        <!-- tab : meta data -->
+        <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='meta-data'){echo 'active';} ?>" id="meta-data">
+
+            <div class="alert">
+                <p>Meta data is used to describe this data to browsers and search engines.</p>
+            </div>
+
+            <div style="margin:0 25px 0 25px;">
+
+                <?=$this->formRow($this->form->get('description'))?>
+                <?=$this->formRow($this->form->get('keywords'))?>
+            </div>
+
+        </div>
+
+        <!-- tab : other -->
+        <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='content-other'){echo 'active';} ?>" id="content-other">
+
+            <div style="margin:0 25px 0 25px;">
+                <?=$this->formElfinder($this->form->get('image'))?>
+                <?=$this->formElfinder($this->form->get('imageThumb'))?>
+            </div>
+
+        </div>
+
+    </div><!-- end: tab content -->
+
+    <h2>Content</h2>
+    <?=$this->partial('delamatre-zend-cms-admin/components/wysiwyg.phtml',array('content'=>$this->entity->content,'formElement'=>$this->form->get('content')))?>
+
+<?=$this->form()->closeTag($this->form)?>

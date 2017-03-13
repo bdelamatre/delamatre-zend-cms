@@ -1,14 +1,11 @@
 {
-    "name": "bdelamatre/delamatre-zend-cms",
-    "description": "Lightweight CMS built on ZF2",
+    "name": "bdelamatre/delamatre-zend-cms-admin",
+    "description": "Administration panel for delamatre-zend-cms",
+    "type": "library",
     "keywords": [
-        "bdelamatre2",
+        "zf2",
         "delamatre",
-        "byron",
-        "zend framework",
-        "ZF2",
-        "CMS",
-        "content management systems"
+        "byron delamatre"
     ],
     "authors": [
         {
@@ -18,11 +15,11 @@
         }
     ],
     "require": {
-        "bdelamatre/delamatre-zend": "dev-master"
+        "bdelamatre/delamatre-zend-cms": "dev-master"
     },
     "autoload":{
         "psr-4":{
-            "DelamatreZendCms\\" : "src/"
+            "DelamatreZendCmsAdmin\\" : "src/"
         },
         "classmap": [
             "Module.php"

@@ -1,0 +1,25 @@
+<?=$this->form()->openTag($this->form)?>
+
+<div class="row">
+    <div class="col-sm-9">
+        <h1>Send Test E-Mail for <?=$this->entity->key?></h1>
+        <a href="/admin/email/index?default-tab=content-videos"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back to e-mails</a>
+    </div>
+    <div class="col-sm-3 text-right">
+    </div>
+</div>
+
+<br/>
+
+<div style="margin: 0 25px 0 25px;">
+
+    Subject: <?=$this->entity->subject?>
+    <br/>
+    <hr/>
+
+    <?=$this->formRow($this->form->get('name'))?>
+    <?=$this->formRow($this->form->get('email'))?>
+</div>
+&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" type="submit">Send</button>
+
+<?=$this->form()->closeTag($this->form)?>

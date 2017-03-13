@@ -1,0 +1,10 @@
+{
+  "directory": "vendor/bower_components/",
+  "timeout": 120000,
+  "name": "Bower config for DelamatreZendCmsAdmin",
+  "dependencies": {
+    "jquery-ui": "~1.12.1",
+    "summernote": "latest",
+    "elfinder": "latest"
+  }
+}

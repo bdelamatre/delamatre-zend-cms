@@ -1,0 +1,122 @@
+body{
+    margin-top:52px;
+}
+
+.body-adjust{
+    margin-top:100px;
+}
+
+.sidebar{
+    color:#fff;
+    background-color: #333;
+    border-right: 2px solid #333;
+    border-bottom: 2px solid #333;
+}
+
+.navbar{
+    height:52px;
+    background-color: #333;
+    background-image: none;
+    border: 0;
+}
+
+.navbar-brand{
+    padding-top: 0px;
+    color: #fff !important;
+}
+
+.sidebar hr{
+    border:1px solid #ccc;
+    margin-top:5px;
+    margin-bottom: 5px;
+}
+
+.nav-sidebar li a{
+    background-color: #333 !important;
+    color:#fff;
+    padding-top:0px;
+}
+
+.nav-sidebar li a:hover{
+    padding-top:0px;
+    color:#EA2227;
+}
+
+
+.environment-adjust{
+    margin-top:18px;
+}
+
+.environment{
+    position: fixed;
+    width:100%;
+    margin-top:-100px;
+    z-index: 255;
+}
+
+li .active{
+    background-color: #333 !important;
+}
+
+li .active a{
+    color: #fff;
+}
+
+.cms-thumbnail-row{
+    margin-bottom:60px;
+}
+
+.cms-thumbnail-row-title{
+    margin-bottom:-10px;
+}
+
+.cms-thumbnail-title{
+    min-height: 40px;
+}
+
+.cms-thumbnail{
+    border-right: 1px solid #eee !important;
+}
+
+.cms-thumbnail img{
+}
+
+/**
+
+Login layout and form styling
+
+**/
+#login{
+    background-color:#303030;
+    color: #fff;
+}
+
+.login-container{
+    max-width: 350px;
+    color: #fff;
+}
+
+.login-form .btn{
+    width: 100%;
+}
+
+.login-form dd{
+    margin-bottom: 10px;
+}
+
+.help-block{
+    color: #ff0000;
+}
+
+.script{
+    font-size: 18px;
+    font-style: italic;
+    background-color: #606060;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.feelthemagic{
+    background-image: url(/img/stars.gif);
+    color: #fff !important;
+}

@@ -1,0 +1,64 @@
+<?php
+
+if(isset($this->id)){
+    $editorId = $this->id;
+}else{
+    $editorId = 'summernote';
+}
+
+?>
+<?=$this->formHidden($this->formElement)?>
+<div id="<?=$editorId?>"><?=$this->content?></div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#<?=$editorId?>').summernote({
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,                  // set focus to editable area after initializing su
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'hr' , 'elfinder']],
+                ['view', ['fullscreen', 'codeview']]
+            ]
+        });
+
+    });
+
+    function elfinderDialog() {
+        var fm = $('<div/>').dialogelfinder({
+            url : '/admin/filemanager/connector', // change with the url of your connector
+            lang : 'en',
+            width : 1000,
+            height: 450,
+            destroyOnClose : true,
+            getFileCallback : function(files, fm) {
+                console.log(files);
+                $('#<?=$editorId?>').summernote('editor.insertImage', files.url);
+            },
+            commandsOptions : {
+                getfile : {
+                    oncomplete : 'close',
+                    folders : false
+                }
+            }
+        }).dialogelfinder('instance');
+    }
+
+    <?php if(!isset($this->buildPostFormFunction) || $this->buildPostFormFunction==true): ?>
+        var postForm = function() {
+
+            var code = $('#<?=$editorId?>').summernote('code').replace(/®/gi,"&reg;").replace(/&gt;/gi,">");
+            console.log(code);
+            var content = $('#<?=$this->formElement->getAttribute('id')?>').val(code);
+        }
+    <?php endif; ?>
+
+</script>

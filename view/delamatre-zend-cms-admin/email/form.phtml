@@ -1,0 +1,110 @@
+<?=$this->form()->openTag($this->form->setAttribute('onsubmit','return postForm();'))?>
+
+<?php
+
+if($this->entity->email_template_id){
+    $additionalAction = '<a href="/admin/email-template/form?id='.$this->entity->email_template_id.'" target="_blank" class="btn btn-primary">Edit Template</a>';
+}
+if($this->entity->id){
+    $additionalAction .= '&nbsp;<a href="/admin/email/send-test?id='.$this->entity->id.'" target="_blank" class="btn btn-primary">Send Test</a>';
+    $additionalAction .= '&nbsp;<a href="/admin/email/preview?id='.$this->entity->id.'" target="_blank" class="btn btn-primary">Preview</a>';
+    $additionalAction .= '&nbsp;<a href="/admin/email/download-outlook-part?id='.$this->entity->id.'" target="_blank" class="btn btn-primary" download>Download Outlook Part</a>';
+}
+
+?>
+
+<?=$this->partial('delamatre-zend-cms-admin/components/entity-form-header.phtml',array('routeName'=>$this->routeName,'name'=>'E-Mail','entity'=>$this->entity,'additionalActions'=>$additionalAction))?>
+
+<?php if($this->entity->id && $this->entity->active==false): ?>
+    <div class="alert alert-danger">
+        <p>This record is inactive. Click `Activate` above to activate this record.</p>
+    </div>
+<?php endif; ?>
+
+    <!-- tab navigation -->
+    <ul class="nav nav-tabs nav-tabs-admin" role="tablist">
+        <li role="presentation" class="<?php if(!$this->defaultTab || $this->defaultTab=='content-details'){echo 'active';} ?>">
+            <a href="#content-details" aria-controls="lead-details" role="tab" data-toggle="tab">E-Mail</a>
+        </li>
+        <li role="presentation" class="<?php if($this->defaultTab=='variables'){echo 'active';} ?>">
+            <a href="#variables" aria-controls="variables" role="tab" data-toggle="tab">[[variables]]</a>
+        </li>
+        <li role="presentation" class="<?php if($this->defaultTab=='variables'){echo 'active';} ?>">
+            <a href="#signature" aria-controls="signature" role="tab" data-toggle="tab">[[signature]]</a>
+        </li>
+        <li role="presentation" class="<?php if($this->defaultTab=='colors'){echo 'active';} ?>">
+            <a href="#colors" aria-controls="colors" role="tab" data-toggle="tab">Colors</a>
+        </li>
+        <?=$this->partial('delamatre-zend-cms-admin/components/related-nav-tabs.phtml',array('entity'=>$this->entity,'defaultTab'=>$this->defaultTab))?>
+    </ul>
+
+    <!-- tab content -->
+    <div class="tab-content tab-content-admin">
+
+        <!-- tab : content details -->
+        <div role="tabpanel" class="tab-pane <?php if(!$this->defaultTab || $this->defaultTab=='content-details'){echo 'active';} ?>" id="content-details">
+
+            <div style="margin:0 25px 0 25px;">
+                <?=$this->formRow($this->form->get('key'))?>
+                <?=$this->formRow($this->form->get('subject'))?>
+                <?=$this->formRow($this->form->get('email_template_id'))?>
+                <?=$this->formRow($this->form->get('category'))?>
+                <?=$this->formRow($this->form->get('attach_related_files'))?>
+            </div>
+
+        </div>
+
+        <!-- tab : content -->
+        <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='variables'){echo 'active';} ?>" id="variables">
+            <div class="alert">
+                These variables will be used on all emails sent to recipients.
+            </div>
+            <div style="margin:0 25px 0 25px;">
+                <?=$this->formRow($this->form->get('title'))?>
+                <?=$this->formRow($this->form->get('description'))?>
+                <?=$this->formElfinder($this->form->get('image'))?>
+                <?=$this->formRow($this->form->get('image_url'))?>
+                <?=$this->formRow($this->form->get('subtitle'))?>
+                <?=$this->formRow($this->form->get('calltoaction'))?>
+                <?=$this->formRow($this->form->get('calltoaction_url'))?>
+            </div>
+
+        </div>
+
+        <!-- tab : content -->
+        <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='signature'){echo 'active';} ?>" id="signature">
+            <div class="alert">
+                If auto, will use the sending user's information
+            </div>
+            <div style="margin:0 25px 0 25px;">
+                <?=$this->formRow($this->form->get('generate_signature'))?>
+                <?=$this->formRow($this->form->get('signature_template'))?>
+                <?=$this->formRow($this->form->get('signature_name'))?>
+                <?=$this->formRow($this->form->get('signature_title'))?>
+                <?=$this->formRow($this->form->get('signature_extension'))?>
+                <?=$this->formRow($this->form->get('signature_mobile'))?>
+            </div>
+
+        </div>
+
+        <!-- tab : colors -->
+        <div role="tabpanel" class="tab-pane <?php if($this->defaultTab=='colors'){echo 'active';} ?>" id="colors">
+
+            <div class="alert">
+                <p>These colors will override the default theme colors. For branding colors visit: <a href="/brand">branding</a></a></p>
+            </div>
+
+            <div style="margin:0 25px 0 25px;">
+                <?=$this->formRow($this->form->get('theme_color'))?>
+            </div>
+
+        </div>
+
+        <?=$this->partial('delamatre-zend-cms-admin/components/related-nav-content.phtml',array('entity'=>$this->entity,'defaultTab'=>$this->defaultTab,'routeName'=>$this->routeName))?>
+
+    </div><!-- end: tab content -->
+
+    <h2>[[content]] Variable</h2>
+    <?=$this->partial('delamatre-zend-cms-admin/components/wysiwyg.phtml',array('content'=>$this->entity->content,'formElement'=>$this->form->get('content')))?>
+
+<?=$this->form()->closeTag($this->form)?>

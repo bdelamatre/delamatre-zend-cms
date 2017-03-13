@@ -1,0 +1,22 @@
+<h1>Configuration</h1>
+<p>Browse the computed configuration from all merged configuration files.</p>
+<?php $configSections = array_keys($this->config()); asort($configSections); ?>
+<div class="row">
+    <div class="col-md-2">
+        <h3>Browse Sections</h3>
+        <ul class="">
+            <li><a href="/admin/settings/configuration">All</a></li>
+            <?php foreach($configSections as $configSection): ?>
+                <li class="<?php if($this->section==$configSection){echo 'active';}?>">
+                    <a href="/admin/settings/configuration?section=<?=$configSection?>"><?=$configSection?></a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <h3>Computed Configuration</h3>
+<textarea style="width:100%;height:600px;">
+<?=\Zend\Debug\Debug::dump($this->config); ?>
+</textarea>
+    </div>
+</div>
