@@ -86,7 +86,7 @@ if(!isset($this->showApplication)){
 
 ?>
 
-<form action="/submit-lead" method="POST" id="<?=$this->id?>">
+<form action="/submit-lead" method="POST" id="<?=$this->id?>" onsubmit="$('button[type=submit], input[type=submit]').prop('disabled',true);">
 
     <div class="row">
 
@@ -176,8 +176,7 @@ if(!isset($this->showApplication)){
     <?php endif; ?>
 
 </form>
-
+<?php $this->inlineScript()->captureStart(); ?>
 <!-- jQuery validate plugin -->
-<script type="text/javascript">
 $('#<?=$this->id?>').validate();
-</script>
+<?php $this->inlineScript()->captureEnd(); ?>

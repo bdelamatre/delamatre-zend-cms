@@ -68,7 +68,7 @@ if(!isset($this->showApplication)){
     </div>
 
     <div class="panel-body">
-        <form action="/submit-lead" method="POST">
+        <form action="/submit-lead" method="POST" onsubmit="$('button[type=submit], input[type=submit]').prop('disabled',true);">
 
             <input type="hidden" name="tracking_division" value="Vulcan" />
 
