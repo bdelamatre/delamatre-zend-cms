@@ -24,6 +24,9 @@ use Zend\Validator\Timezone;
  *     @ORM\Index(name="index_owner", columns={"owner"}),
  *     @ORM\Index(name="index_email", columns={"email"})
  * })
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="record_type", type="string")
+ * @ORM\DiscriminatorMap({"lead"="Lead"})
  */
 class Lead extends AbstractEntity{
 

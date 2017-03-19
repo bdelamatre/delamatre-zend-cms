@@ -83,25 +83,6 @@ class Content extends AbstractEntity{
      */
     public $active = true;
 
-    /*public function getInputFilter()
-    {
-        if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
-
-            $inputFilter->add(array(
-                'name'     => 'id',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
-
-            $this->inputFilter = $inputFilter;
-        }
-
-
-        return $this->inputFilter;
-    }*/
 
     public function getFolderName(){
         return(strtolower(__CLASS__));

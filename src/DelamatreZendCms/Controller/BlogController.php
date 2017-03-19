@@ -16,7 +16,7 @@ class BlogController extends AbstractActionController
             ->from('DelamatreZendCms\Entity\Blog','b')
             ->where('b.active=1')
             ->orderBy('b.posted_timestamp','DESC')
-            ->orderBy('b.id','DESC');
+            ->addOrderBy('b.id','DESC');
 
         if($category!='all'){
             $blogQb->andWhere('b.category=:category');
@@ -56,7 +56,7 @@ class BlogController extends AbstractActionController
             ->from('DelamatreZendCms\Entity\Blog','a')
             ->where('a.key=:key')
             ->setParameter('key',$key)
-            ->getQuery()->getSingleResult();
+            ->getQuery()->getOneOrNullResult();
 
         if(empty($post)){
             throw new \Exception("blog post with key `$key` not found");

@@ -71,10 +71,20 @@ class IndexController extends AbstractActionController
     public function contactAction(){
 
         $view = new ViewModel();
+        $view->application = $this->params()->fromQuery('application');
+        $view->industry = $this->params()->fromQuery('industry');
+        $view->description = $this->params()->fromQuery('description');
         $view->content = $this->getContent('contact');
         $view->isXmlHttpRequest = $this->getRequest()->isXmlHttpRequest();
         //$view->setTerminal($view->isXmlHttpRequest);
         return $view;
+    }
+
+    public function preventFurtherPopupsAction(){
+
+        $_SESSION['contacted'] = 'nofurtherpopupsplease';
+        die($_SESSION['contacted']);
+
     }
 
     //default lead thank you

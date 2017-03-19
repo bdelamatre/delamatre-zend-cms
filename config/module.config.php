@@ -48,6 +48,16 @@ return array(
                     ),
                 ),
             ),
+            'prevent-further-popups' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/prevent-further-popups',
+                    'defaults' => array(
+                        'controller' => 'DelamatreZendCms\Controller\Index',
+                        'action'     => 'prevent-further-popups',
+                    ),
+                ),
+            ),
             'blog-post' => array(
                 'type' => 'Segment',
                 'options' => array(
@@ -147,6 +157,9 @@ return array(
             'DelamatreZendCms\Controller\Blog' => Controller\BlogController::class,
             'DelamatreZendCms\Controller\Lead' => Controller\LeadController::class,
         ),
+    ),
+
+    'module_layouts' => array(
     ),
 
     'view_manager' => array(

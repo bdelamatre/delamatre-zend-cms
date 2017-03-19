@@ -18,7 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\Index(name="index_active", columns={"active"}),
  *     @ORM\Index(name="index_find", columns={"key","active"}),
  *     @ORM\Index(name="index_sort", columns={"title","active"})
- *
  * })
  */
 class Blog extends Superclass\Content{
@@ -40,11 +39,11 @@ class Blog extends Superclass\Content{
 
 
     public function getImageThumb(){
-        return '/img/blog/'.$this->imageThumb;
+        return $this->imageThumb;
     }
 
     public function getImage(){
-        return '/img/blog/'.$this->image;
+        return $this->image;
     }
 
 }
