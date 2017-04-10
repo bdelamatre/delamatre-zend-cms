@@ -32,14 +32,8 @@ class DynamicNavigation extends DefaultNavigationFactory
         }
 
         return $configuration;
-
     }
 
-    /**
-     * @param EntityManager $em
-     * @param $configuration
-     * @return mixed
-     */
     public static function recursiveSearch(EntityManager $em,$configuration){
 
         //cycle through the navigation configuration and add the dynamic content
@@ -49,10 +43,13 @@ class DynamicNavigation extends DefaultNavigationFactory
             $queryBuilder = $em->createQueryBuilder();
             $queryBuilder->select('e');
 
-            switch($page['label']){
-                default:
-                    $isDynamic=false;
-                    $queryBuilder->from('DelamatreZendCms\Entity\Content','e');
+            if($page['entity']){
+                $isDynamic=true;
+                $route = $page['entity_route'];
+                $queryBuilder->from($page['entity'],'e');
+            }else{
+                $isDynamic=false;
+                $queryBuilder->from('DelamatreZendCms\Entity\Content','e');
             }
 
 
@@ -66,7 +63,7 @@ class DynamicNavigation extends DefaultNavigationFactory
 
                 if($page['depth']>0){
 
-                   self::recursiveAddPages($em,$configuration[$key]['pages'],$route,$results);
+                    self::recursiveAddPages($em,$configuration[$key]['pages'],$route,$results);
 
                 }else{
 
@@ -82,8 +79,6 @@ class DynamicNavigation extends DefaultNavigationFactory
                     }
 
                 }
-
-
 
             }else{
 

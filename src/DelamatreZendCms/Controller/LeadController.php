@@ -26,62 +26,73 @@ class LeadController extends AbstractActionController
         //get a new lead object based on the config file
         $lead = $this->getLeadEntity();
 
-        //set the lead time to now
-        $lead->setCreatedToNow();
+        //get the lead form
+        $leadForm = $lead->getForm();
 
-        //set the lead division
-        //fix-me: create function
-        //$lead->setTrackingDivision($post['division'],$this->getConfig()['lead']['default_division']);
-        if(empty($post['tracking_division'])){
-            $post['tracking_division'] = $this->getConfig()['lead']['default_division'];
-        }
+        //validate the lead form
+        $leadForm->setData($post);
+        if($leadForm->isValid()){
 
-        //set the tracking information
-        $lead->setTrackingInformation($this->getGeoIP2Client());
+            //set the lead time to now
+            $lead->setCreatedToNow();
 
-        //set values from post. do this first so that we can overwrite these values if necessary.
-        $lead->exchangeArray($post);
+            //set the lead division
+            //fix-me: create function
+            //$lead->setTrackingDivision($post['division'],$this->getConfig()['lead']['default_division']);
+            if(empty($post['tracking_division'])){
+                $post['tracking_division'] = $this->getConfig()['lead']['default_division'];
+            }
 
-        //generate an access id for unauthenticated access
-        $lead->generateAccessId($this->getEntityManager());
+            //set the tracking information
+            $lead->setTrackingInformation($this->getGeoIP2Client());
 
-        //spam detection using honeypot
-        $lead->checkifSpam($post);
+            //set values from post. do this first so that we can overwrite these values if necessary.
+            $lead->exchangeArray($post);
 
-        $this->getEntityManager()->persist($lead);
-        $this->getEntityManager()->flush();
+            //generate an access id for unauthenticated access
+            $lead->generateAccessId($this->getEntityManager());
 
-        //send the lead to salesforce if not spam
-        if($lead->tracking_spam==false
-            && $this->getConfig()['salesforce']['send_leads_to_salesforce']==true){
+            //spam detection using honeypot
+            $lead->checkifSpam($post);
 
-            //$lead->sendToSalesForce($this->getConfig()['myapp']['salesforce']['web_to_lead_form']['oid']);
-            $lead->sendToSalesForceApi($this->getSalesForceEnterpriseClient(),$this->getConfig()['myapp']['baseurl'],
-                                        $this->getEntityManager(),$this->getGetresponseClients());
-
+            $this->getEntityManager()->persist($lead);
             $this->getEntityManager()->flush();
+
+            //send the lead to salesforce if not spam
+            if($lead->tracking_spam==false
+                && $this->getConfig()['salesforce']['send_leads_to_salesforce']==true){
+
+                //$lead->sendToSalesForce($this->getConfig()['myapp']['salesforce']['web_to_lead_form']['oid']);
+                $lead->sendToSalesForceApi($this->getSalesForceEnterpriseClient(),$this->getConfig()['myapp']['baseurl'],
+                    $this->getEntityManager(),$this->getGetresponseClients());
+
+                $this->getEntityManager()->flush();
+            }
+
+            if($lead->tracking_spam==false
+                && $this->getConfig()['lead']['send_to_email']){
+
+                $message = $this->createMail();
+                $message->setTo($this->getConfig()['lead']['send_to_email']);
+
+                $lead->sendToEmail($message,$this->getSmtp());
+
+            }
+
+            //user has contacted us so stop bugging them with popups
+            //fix-me: better way to handle this
+            $_SESSION['contacted'] = true;
+
+            //redirect to the appropriate url
+            if(!empty($post['redirect'])){
+                $this->redirect()->toUrl($post['redirect']);
+            }else{
+                $this->redirect()->toRoute('thank-you');
+            }
+
         }
 
-        if($lead->tracking_spam==false
-            && $this->getConfig()['lead']['send_to_email']){
 
-            $message = $this->createMail();
-            $message->setTo($this->getConfig()['lead']['send_to_email']);
-
-            $lead->sendToEmail($message,$this->getSmtp());
-
-        }
-
-        //user has contacted us so stop bugging them with popups
-        //fix-me: better way to handle this
-        $_SESSION['contacted'] = true;
-
-        //redirect to the appropriate url
-        if(!empty($post['redirect'])){
-            $this->redirect()->toUrl($post['redirect']);
-        }else{
-            $this->redirect()->toRoute('thank-you');
-        }
 
     }
 

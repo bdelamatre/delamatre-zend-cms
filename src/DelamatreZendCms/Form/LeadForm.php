@@ -3,12 +3,21 @@
 namespace DelamatreZendCms\Form;
 
 use DelamatreZendCms\Form\Element\Country;
-use DelamatreZendCms\Form\Element\Division;
+use Zend\Captcha\AdapterInterface as CaptchaAdapter;
 use Zend\Form\Form;
 
 class LeadForm extends Form{
 
-    public function __construct($name=null, \SforceEnterpriseClient $client=null){
+    /**
+     * @var CaptchaAdapter
+     */
+    protected $captcha;
+
+    public function __construct($name=null, $options=array(), \SforceEnterpriseClient $client=null){
+
+        if(isset($options['captcha_adapter'])){
+            $this->captcha = $options['captcha_adapter'];
+        }
 
         parent::__construct($name);
 
@@ -187,6 +196,21 @@ class LeadForm extends Form{
                 'label' => 'Redirect URL',
             ),
         ));
+
+        if($this->captcha){
+
+            $this->add(array(
+                'name' => 'captcha',
+                'type' => 'captcha',
+                'options' => array(
+                    'label' => 'Please verify you are human.',
+                    'captcha' => array(
+                        'captcha' => $this->captcha,
+                    ),
+                ),
+            ));
+
+        }
 
     }
 

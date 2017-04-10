@@ -28,7 +28,7 @@ class IndexController extends AbstractActionController
 
         //by default we are going to prepare a blog
         $qb = $this->createQueryBuilder();
-        $qb->select(array('b'))->from('DelamatreZendCms\Entity\Blog','b')->orderBy('b.id','DESC')->setMaxResults(3);
+        $qb->select(array('b'))->from('DelamatreZendCms\Entity\Blog','b')->orderBy('b.posted_timestamp','DESC')->where('b.active=1')->setMaxResults(3);
         $blog = $qb->getQuery()->getResult();
 
         $view = new ViewModel();;

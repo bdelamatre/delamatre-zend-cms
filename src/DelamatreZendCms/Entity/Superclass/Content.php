@@ -101,4 +101,40 @@ class Content extends AbstractEntity{
         return (string)$this->content;
     }
 
+    public function getTitle($stripHtml=false,$escape=false){
+        if($stripHtml==true){
+            if($escape){
+                return str_replace('"','&quot;',strip_tags($this->title));
+            }else{
+                $title = str_replace('<br/>','  ',$this->title);
+                $title = str_replace('<br>',' ',$title);
+                return strip_tags($title);
+            }
+        }else{
+            return $this->title;
+        }
+    }
+
+    public function getTitleForKey(){
+        $title = $this->title;
+        $title = preg_replace("/[^A-Za-z0-9]/", '', $title);
+        return $title;
+    }
+
+    public function getDescription($stripHtml=false){
+        if($stripHtml==true){
+            return strip_tags($this->description);
+        }else{
+            return $this->description;
+        }
+    }
+
+    public function getKeywords($stripHtml=false){
+        if($stripHtml==true){
+            return strip_tags($this->keywords);
+        }else{
+            return $this->keywords;
+        }
+    }
+
 }

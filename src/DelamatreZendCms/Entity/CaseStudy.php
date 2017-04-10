@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * })
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="record_type", type="string")
- * @ORM\DiscriminatorMap({"case-study"="CaseStudy"})
+ * @ORM\DiscriminatorMap({"case-study"="CaseStudy","custom-case-study"="Application\Entity\CaseStudy"})
  */
 class CaseStudy extends SuperclassContent{
 

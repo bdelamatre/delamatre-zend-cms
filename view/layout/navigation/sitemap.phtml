@@ -7,7 +7,7 @@
 
         <?php if($startNewRow==true): ?>
         <?php $startNewRow = false; ?>
-            <div class="col-md-3">
+            <div class="col-md-4">
         <?php endif; ?>
 
         <?php /* @var $page Zend\Navigation\Page\Mvc */ ?>
@@ -46,9 +46,28 @@
 
                                         <li>
                                             <a href="<?php echo $anotherChild->getHref() ?>">
-                                                <?php echo $this->translate($anotherChild->getLabel()) ?>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->translate($anotherChild->getLabel()) ?>
                                             </a>
                                         </li>
+
+                                        <?php $hasEvenMoreChildren = $child->hasPages() ?>
+
+                                        <?php if($hasEvenMoreChildren): ?>
+
+                                                <?php foreach($anotherChild->getPages() as $anotherChild2): ?>
+                                                    <?php $colItemCount++; ?>
+
+                                                    <li>
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo $anotherChild2->getHref() ?>">
+                                                            <?php echo $this->translate($anotherChild2->getLabel()) ?>
+                                                        </a>
+                                                    </li>
+
+                                                <?php endforeach; ?>
+
+
+                                            <?php $count++ ?>
+                                        <?php endif; ?>
 
                                     <?php endforeach; ?>
 
@@ -63,13 +82,13 @@
         <?php endif; ?>
         <?php $count++ ?>
 
-
-
-        <?php if($colItemCount>10 || count($this->container)==($key+1)): ?>
+        <?php if($colItemCount>20 || count($this->container)==($key+1)): ?>
             <?php $colItemCount=0; ?>
             <?php $startNewRow=true; ?>
             </div>
         <?php endif; ?>
 
     <?php endforeach ?>
+</div>
+<!-- fix-me: rogue tag -->
 </div>

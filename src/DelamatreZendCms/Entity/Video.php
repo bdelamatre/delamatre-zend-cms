@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * })
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="record_type", type="string")
- * @ORM\DiscriminatorMap({"video"="Video"})
+ * @ORM\DiscriminatorMap({"video"="Video","custom-video"="Application\Entity\Video"})
  */
 class Video extends SuperclassContent{
 
