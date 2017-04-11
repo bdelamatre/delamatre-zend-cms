@@ -10,6 +10,7 @@
 namespace DelamatreZendCms\Controller;
 
 use Application\Entity\Lead;
+use Application\Form\LeadForm;
 use DelamatreZendCms\Entity\Subscribe;
 use DelamatreZendCms\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -27,11 +28,12 @@ class LeadController extends AbstractActionController
         $lead = $this->getLeadEntity();
 
         //get the lead form
-        $leadForm = $lead->getForm();
+        //$leadForm = $lead->getForm();
+        $leadForm = new LeadForm();
 
         //validate the lead form
         $leadForm->setData($post);
-        if($leadForm->isValid()){
+        //if($leadForm->isValid()){
 
             //set the lead time to now
             $lead->setCreatedToNow();
@@ -54,6 +56,9 @@ class LeadController extends AbstractActionController
 
             //spam detection using honeypot
             $lead->checkifSpam($post);
+
+            //duplicate detection
+            $lead->checkifDuplicate($this->getEntityManager());
 
             $this->getEntityManager()->persist($lead);
             $this->getEntityManager()->flush();
@@ -90,9 +95,15 @@ class LeadController extends AbstractActionController
                 $this->redirect()->toRoute('thank-you');
             }
 
-        }
+        /*}else{
 
+            $errors = $leadForm->getMessages();
+            $errorKeys = array_keys($errors);
 
+            $errorString = implode(',',$errorKeys);
+
+            throw new \Exception('submission not valid. invalid fields: '.$errorString);
+        }*/
 
     }
 

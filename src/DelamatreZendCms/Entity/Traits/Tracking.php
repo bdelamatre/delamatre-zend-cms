@@ -3,6 +3,7 @@
 namespace DelamatreZendCms\Entity\Traits;
 
 use DelamatreZendCms\Form\Element\Country;
+use Doctrine\ORM\EntityManager;
 use GeoIp2\WebService\Client;
 
 trait Tracking{

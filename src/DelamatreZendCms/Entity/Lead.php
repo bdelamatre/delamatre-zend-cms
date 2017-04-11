@@ -244,6 +244,41 @@ class Lead extends AbstractEntity{
     }
 
     /**
+     * Generate a unique and randome access ID for this lead that can be used to acccess without authentication.
+     *
+     * @param EntityManager $entityManager
+     * @param bool $overwrite
+     * @return mixed
+     */
+    public function checkIfDuplicate(EntityManager $entityManager){
+
+        var_dump(get_class($this));
+
+        $qb = $entityManager->createQueryBuilder();
+        $qb->select('l')
+            ->from(get_class($this),'l')
+            ->where('l.first_name=:first_name')
+            ->andWhere('l.last_name=:last_name')
+            ->andWhere('l.email=:email')
+            ->andWhere('l.description=:description');
+
+        $found = $qb->getQuery()->setParameters(array('first_name'=>$this->first_name,
+                                                        'last_name'=>$this->last_name,
+                                                        'email'=>$this->email,
+                                                        'description'=>$this->description,))
+                                ->getArrayResult();
+
+        if(count($found)>0){
+            $this->tracking_duplicate = true;
+            return true;
+        }else{
+            $this->tracking_duplicate = true;
+            return false;
+        }
+
+    }
+
+    /**
      * Populate from an array.
      *
      * @param array $data
