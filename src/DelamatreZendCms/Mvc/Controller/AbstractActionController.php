@@ -56,6 +56,7 @@ class AbstractActionController extends \DelamatreZend\Mvc\Controller\AbstractAct
             $this->setHeadMetaKeywords($content->keywords);
             $this->setHeadMetaDescription($content->description);
 
+
         }
 
         return $content;

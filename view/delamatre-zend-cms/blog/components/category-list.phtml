@@ -1,6 +1,6 @@
 <ul>
     <li><a href="<?=$this->url('blog')?>">All</a></li>
     <?php foreach($this->categories as $category): ?>
-        <li><a href="<?=$this->url('blog',array('category'=>$category['category']))?>" rel="nofollow"><?=$category['category']?></a> (<?=$category[1]?>)</li>
+        <li><a href="<?=$this->url('blog',array('category'=>$category['category']))?>"><?=$category['category']?></a> (<?=$category[1]?>)</li>
     <?php endforeach; ?>
 </ul>

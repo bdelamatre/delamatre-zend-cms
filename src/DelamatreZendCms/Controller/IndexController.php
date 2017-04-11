@@ -31,7 +31,7 @@ class IndexController extends AbstractActionController
         $qb->select(array('b'))->from('DelamatreZendCms\Entity\Blog','b')->orderBy('b.posted_timestamp','DESC')->where('b.active=1')->setMaxResults(3);
         $blog = $qb->getQuery()->getResult();
 
-        $view = new ViewModel();;
+        $view = new ViewModel();
         $view->gallery = $gallery;
         $view->blog = $blog;
         //by default we are going to get the contents for home

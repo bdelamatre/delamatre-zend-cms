@@ -19,10 +19,10 @@ $gallery = $this->gallery;
         <?php foreach($gallery as $key=>$image): ?>
             <div class="item <?php if($key==0){echo 'active';}?>">
                 <a href="<?=$image->link?>">
-                    <img src="<?=$image->getImage()?>" class="img-responsive " alt="<?=$image->description?>" title="<?=$image->title?>" />
+                    <img src="<?=$image->getImage()?>" class="img-responsive " alt="<?=$image->getTitle(true)?>" title="<?=$image->getTitle(true)?>" />
                 </a>
                 <div class="carousel-caption">
-                    <h1><a href="<?=$image->link?>"><?=$image->title?></a></h1>
+                    <h2><a href="<?=$image->link?>"><?=$image->title?></a></h2>
                     <p><?=$image->description?></p>
                 </div>
             </div>
