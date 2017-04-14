@@ -252,10 +252,8 @@ class Lead extends AbstractEntity{
      */
     public function checkIfDuplicate(EntityManager $entityManager){
 
-        var_dump(get_class($this));
-
         $qb = $entityManager->createQueryBuilder();
-        $qb->select('l')
+        $qb->select($qb->expr()->count('l.id'))
             ->from(get_class($this),'l')
             ->where('l.first_name=:first_name')
             ->andWhere('l.last_name=:last_name')
@@ -266,13 +264,14 @@ class Lead extends AbstractEntity{
                                                         'last_name'=>$this->last_name,
                                                         'email'=>$this->email,
                                                         'description'=>$this->description,))
-                                ->getArrayResult();
+                                ->getSingleScalarResult();
 
-        if(count($found)>0){
+
+        if((int)$found>0){
             $this->tracking_duplicate = true;
             return true;
         }else{
-            $this->tracking_duplicate = true;
+            $this->tracking_duplicate = false;
             return false;
         }
 
