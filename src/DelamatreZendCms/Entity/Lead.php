@@ -26,7 +26,7 @@ use Zend\Validator\Timezone;
  * })
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="record_type", type="string")
- * @ORM\DiscriminatorMap({"lead"="Lead","custom-lead"="Application\Entity\Lead"})
+ * @ORM\DiscriminatorMap({"lead"="Lead"})
  */
 class Lead extends AbstractEntity{
 

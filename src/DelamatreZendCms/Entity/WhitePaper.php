@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * })
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="record_type", type="string")
- * @ORM\DiscriminatorMap({"white-paper"="WhitePaper","custom-white-paper"="Application\Entity\WhitePaper"})
+ * @ORM\DiscriminatorMap({"white-paper"="WhitePaper"})
  */
 class WhitePaper extends SuperclassContent{
 
